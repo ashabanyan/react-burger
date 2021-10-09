@@ -3,6 +3,7 @@ import React from "react";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { Scrollbar } from "react-scrollbars-custom";
+import PropTypes from 'prop-types';
 
 const tab_items = ["Булки", "Соусы", "Начинки"];
 
@@ -77,6 +78,10 @@ class BurgerIngredients extends React.Component {
       
     );
   }
+}
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.array
 }
 
 export default BurgerIngredients;

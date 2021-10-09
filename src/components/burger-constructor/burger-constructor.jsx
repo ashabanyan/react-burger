@@ -57,23 +57,3 @@ class BurgetConstructor extends React.Component {
 }
 
 export default BurgetConstructor;
-
-//          <ConstructorElement
-//           type="top"
-//           isLocked={true}
-//           text="Краторная булка N-200i (верх)"
-//           price={200}
-//           thumbnail={'https://yandex-praktikum.github.io/react-developer-burger-ui-components/docs/static/img-5f9ccf21a0eb45d06e57410b025f366c.png'}
-//         />
-//         <ConstructorElement
-//           text="Краторная булка N-200i (верх)"
-//           price={50}
-//           thumbnail={'https://yandex-praktikum.github.io/react-developer-burger-ui-components/docs/static/img-5f9ccf21a0eb45d06e57410b025f366c.png'}
-//         />
-//         <ConstructorElement
-//           type="bottom"
-//           isLocked={true}
-//           text="Краторная булка N-200i (низ)"
-//           price={200}
-//           thumbnail={'https://yandex-praktikum.github.io/react-developer-burger-ui-components/docs/static/img-5f9ccf21a0eb45d06e57410b025f366c.png'}
-//         />
