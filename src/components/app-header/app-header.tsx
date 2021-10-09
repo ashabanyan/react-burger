@@ -28,46 +28,43 @@ const rightMenu = [
   },
 ];
 
-class AppHeader extends React.Component {
-  render() {
-    return (
-      <header className={styles.header}>
-        <div className={styles.header_container}>
-          <nav className={styles.navigation}>
-            <ul
-              className={`${styles.menu_list} ${styles.left_menu} ${styles.header_element}`}
-            >
-              {leftMenu.map((item, index) => (
-                <li
-                  className={`${styles.menu_list_item} ${
-                    index !== 0 ? "ml-10" : ""
-                  }`}
-                >
-                  {item.icon}
-                  <p className="text text_type_main-default ml-2">
-                    {item.title}
-                  </p>
-                </li>
-              ))}
-            </ul>
+const AppHeader = () => {
+  return (
+    <header className={styles.header}>
+      <div className={styles.header_container}>
+        <nav className={styles.navigation}>
+          <ul
+            className={`${styles.menu_list} ${styles.left_menu} ${styles.header_element}`}
+          >
+            {leftMenu.map((item, index) => (
+              <li
+                key={index}
+                className={`${styles.menu_list_item} ${
+                  index !== 0 ? "ml-10" : ""
+                }`}
+              >
+                {item.icon}
+                <p className="text text_type_main-default ml-2">{item.title}</p>
+              </li>
+            ))}
+          </ul>
 
-            <Logo />
+          <Logo />
 
-            <ul
-              className={`${styles.menu_list} ${styles.right_menu} ${styles.header_element}`}
-            >
-              {rightMenu.map((item) => (
-                <li className={styles.menu_list_item}>
-                  {item.icon}
-                  <p className="text text_type_main-default">{item.title}</p>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </header>
-    );
-  }
-}
+          <ul
+            className={`${styles.menu_list} ${styles.right_menu} ${styles.header_element}`}
+          >
+            {rightMenu.map((item, index) => (
+              <li key={index} className={styles.menu_list_item}>
+                {item.icon}
+                <p className="text text_type_main-default">{item.title}</p>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+};
 
 export default AppHeader;

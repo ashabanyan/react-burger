@@ -7,20 +7,18 @@ import styles from "../app/app.module.css";
 import data from "../../utils/data.js";
 import order from "../../utils/order.js";
 
-class App extends React.Component {
-  render() {
-    return (
-      <>
-        <AppHeader />
-        <main className={styles.main_container}>
-          <div className={`${styles.ingredients_block}`}>
-            <BurgerIngredients ingredients={data} />
-            <BurgerConstructor orderInfo={order} />
-          </div>
-        </main>
-      </>
-    );
-  }
-}
+const App = () => {
+  return (
+    <>
+      <AppHeader />
+      <main className={styles.main_container}>
+        <div className={`${styles.ingredients_block}`}>
+          <BurgerIngredients ingredients={data} />
+          <BurgerConstructor orderInfo={order} />
+        </div>
+      </main>
+    </>
+  );
+};
 
 export default App;
