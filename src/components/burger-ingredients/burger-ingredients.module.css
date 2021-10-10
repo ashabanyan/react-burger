@@ -1,0 +1,26 @@
+.section_container {
+  width: 600px;
+}
+
+.ingredients {
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.tab_block {
+  display: flex;
+}
+
+.tab_block > div {
+  width: 100%;
+}
+
+.ingredients_block {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ingredient_type {
+  font-size: 24px;
+}
