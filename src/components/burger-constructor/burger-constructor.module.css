@@ -1,0 +1,23 @@
+.section_container {
+  width: 600px;
+}
+
+.element_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total_price {
+  display: flex;
+  align-items: center;
+}
+
+.total_price_number {
+  font-size: 48px;
+}
