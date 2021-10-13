@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../burger-constructor/burger-constructor.module.css';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
-import PropTypes from 'prop-types';
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
 
 const BurgetConstructor = (props) => {
+  const [active, setActive] = useState(false)
+  const [order, setOrder] = useState(
+    {
+      number: "034536", 
+    }
+  )
+
+  const handleOpenModal = () => setActive(true);
+
+  const handleCloseModal = () => setActive(false);
+
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setActive(false)
+      }
+    })
+  }, []);
+
   return (
     <section className={`${styles.section_container} mt-25`}>
 
@@ -49,10 +69,17 @@ const BurgetConstructor = (props) => {
           <p className={`${styles.total_price_number} text text_type_main-default mr-2`}>610</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button type="primary" size="medium">
+        <Button onClick={handleOpenModal} type="primary" size="medium">
           Оформить заказ
         </Button>
       </div>
+
+      {active && (
+        <Modal onClick={handleCloseModal}>
+          <OrderDetails number={order.number}/>
+        </Modal>
+        )
+      }
     </section>
   )
 }

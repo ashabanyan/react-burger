@@ -1,0 +1,22 @@
+.content_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ingredient_name {
+  text-align: center;
+}
+
+.info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #8585ad;
+}
