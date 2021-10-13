@@ -18,14 +18,6 @@ const IngredientItem = (props) => {
     setActive(false);
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        setActive(false)
-      }
-    })
-  }, []);
-
   return (
     <li className={`${styles.ingredient_item} mb-10`} onClick={handleOpenModal}>
       <img className={styles.image} src={props.ingredient.image} alt={props.ingredient.name}/>
