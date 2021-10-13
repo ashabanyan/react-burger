@@ -8,25 +8,16 @@ import IngredientsDetails from '../ingredient-details/ingredient-details'
 const IngredientItem = (props) => {
   const [active, setActive] = useState(false);
 
-  const handleOpenModal = (e) => {
-    e.stopPropagation();
+  const handleOpenModal = () => {
     setActive(true);
   }
 
-  const handleCloseModal = (e) => {
-    e.stopPropagation();
+  const handleCloseModal = () => {
     setActive(false);
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        setActive(false)
-      }
-    })
-  }, []);
-
   return (
+    <>
     <li className={`${styles.ingredient_item} mb-10`} onClick={handleOpenModal}>
       <img className={styles.image} src={props.ingredient.image} alt={props.ingredient.name}/>
 
@@ -39,13 +30,15 @@ const IngredientItem = (props) => {
 
       <Counter count={1} size="default" />
 
-      {active && (
-        <Modal onClick={handleCloseModal}>
-          <IngredientsDetails itemData={props.ingredient} />
-        </Modal>
-        )
-      }
     </li>
+
+    {active && (
+      <Modal onClick={handleCloseModal}>
+        <IngredientsDetails itemData={props.ingredient} />
+      </Modal>
+      )
+    }
+    </>
   )
 }
 

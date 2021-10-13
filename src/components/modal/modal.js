@@ -7,7 +7,17 @@ import { CloseIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("react-modals");
 
+
+
 const Modal = ({ children, onClick }) =>  {
+
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        onClick()
+      }
+    })
+  }, []);
 
   return ReactDOM.createPortal(
     (

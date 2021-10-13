@@ -18,14 +18,6 @@ const BurgetConstructor = (props) => {
 
   const handleCloseModal = () => setActive(false);
 
-  useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        setActive(false)
-      }
-    })
-  }, []);
-
   return (
     <section className={`${styles.section_container} mt-25`}>
 
