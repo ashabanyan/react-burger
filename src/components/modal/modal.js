@@ -9,6 +9,20 @@ const modalRoot = document.getElementById("react-modals");
 
 const Modal = ({ children, onClick }) =>  {
 
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        onClick(false)
+      }
+    })
+
+    return () => document.removeEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        onClick(false)
+      }
+    })
+  }, []);
+
   return ReactDOM.createPortal(
     (
       <>
