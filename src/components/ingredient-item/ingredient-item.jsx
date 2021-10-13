@@ -8,20 +8,19 @@ import IngredientsDetails from '../ingredient-details/ingredient-details'
 const IngredientItem = (props) => {
   const [active, setActive] = useState(false);
 
-  const handleOpenModal = (e) => {
-    e.stopPropagation();
+  const handleOpenModal = () => {
     setActive(true);
   }
 
-  const handleCloseModal = (e) => {
-    e.stopPropagation();
+  const handleCloseModal = () => {
     setActive(false);
   }
 
   return (
+    <>
     <li className={`${styles.ingredient_item} mb-10`} onClick={handleOpenModal}>
       <img className={styles.image} src={props.ingredient.image} alt={props.ingredient.name}/>
-
+      
       <div className={styles.price}>
         <p className={`${styles.price_text} text text_type_main-small mr-1`}>{props.ingredient.price}</p>
         <CurrencyIcon type="primary" />
@@ -30,14 +29,15 @@ const IngredientItem = (props) => {
       <p className={`${styles.name_text} text text_type_main-default mt-1`}>{props.ingredient.name}</p>
 
       <Counter count={1} size="default" />
-
-      {active && (
-        <Modal onClick={handleCloseModal}>
-          <IngredientsDetails itemData={props.ingredient} />
-        </Modal>
-        )
-      }
     </li>
+
+    {active && (
+      <Modal onClick={handleCloseModal}>
+        <IngredientsDetails itemData={props.ingredient} />
+      </Modal>
+      )
+    }
+    </>
   )
 }
 
