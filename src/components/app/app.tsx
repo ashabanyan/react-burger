@@ -12,9 +12,13 @@ const App = () => {
   useEffect(() => {
     try {
       fetch(GET_INGREDIENTS_URL)
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка ${res.status}`);
+        })
         .then((result) => {
-          // console.log(result);
           setData(result.data);
         });
     } catch (error) {
@@ -31,8 +35,6 @@ const App = () => {
           <BurgerConstructor orderInfo={order} />
         </div>
       </main>
-
-      <div id="react-modals"></div>
     </>
   );
 };

@@ -3,20 +3,23 @@ import ReactDOM from 'react-dom'
 import styles from '../modal/modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'
 import { CloseIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("react-modals");
 
 
-
 const Modal = ({ children, onClick }) =>  {
 
+  const closeByEscape = (e) => {
+    if (e.key === 'Escape') {
+      onClick()
+    }
+  };
+
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        onClick()
-      }
-    })
+    document.addEventListener('keydown', closeByEscape)
+
+    return () => document.removeEventListener('keydown', closeByEscape)
   }, []);
 
   return ReactDOM.createPortal(
@@ -32,5 +35,10 @@ const Modal = ({ children, onClick }) =>  {
     modalRoot
   );
 } 
+
+Modal.propTypes = {
+  children: PropTypes.element.isRequired,
+  onClick: PropTypes.func.isRequired,
+}
 
 export default Modal;
