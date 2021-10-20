@@ -48,17 +48,17 @@ const BurgerIngredients = ({ingredients}) => {
           
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Булки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {ingredients && ingredients.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Соусы</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === "sauce" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {ingredients && ingredients.map((item, index) => item.type === "sauce" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Начинки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {ingredients && ingredients.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
           
         </Scrollbar>

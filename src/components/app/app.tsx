@@ -3,11 +3,12 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "../app/app.module.css";
-import order from "../../utils/order.js";
 import { GET_INGREDIENTS_URL } from "../../constants/constants";
+import { OrderContext } from "../../context/orderContext";
 
 const App = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
+  const orderState = useState();
 
   useEffect(() => {
     try {
@@ -26,13 +27,21 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const [orderInfoState, setOrderInfoState] = orderState;
+    data && setOrderInfoState(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   return (
     <>
       <AppHeader />
       <main className={styles.main_container}>
         <div className={`${styles.ingredients_block}`}>
           <BurgerIngredients ingredients={data} />
-          <BurgerConstructor orderInfo={order} />
+          <OrderContext.Provider value={orderState}>
+            <BurgerConstructor />
+          </OrderContext.Provider>
         </div>
       </main>
     </>
