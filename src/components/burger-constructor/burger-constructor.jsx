@@ -5,7 +5,7 @@ import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui
 import { Scrollbar } from "react-scrollbars-custom";
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
-import { OrderContext } from "../../context/orderContext";
+import { BurgerContext } from "../../context/burgerContext";
 
 const initialTotalPrice = { count: 0};
 
@@ -15,7 +15,7 @@ const totalPriceCounter = (state, action) => action.map(item => item.price).redu
 const BurgetConstructor = () => {
   const [active, setActive] = useState(false)
   const [orderNumber, setOrderNumber] = useState();
-  const [orderInfo, setOrderInfo] = useContext(OrderContext);
+  const [orderInfo, setOrderInfo] = useContext(BurgerContext);
 
   const [totalPrice, dispatch] = useReducer(totalPriceCounter, initialTotalPrice );
   

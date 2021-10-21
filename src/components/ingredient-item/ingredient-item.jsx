@@ -3,6 +3,7 @@ import styles from '../ingredient-item/ingredient-item.module.css'
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
+import IngredientType from '../../utils/types'
 
 
 const IngredientItem = ({ onClick, ingredient }) => {
@@ -28,21 +29,7 @@ const IngredientItem = ({ onClick, ingredient }) => {
 
 IngredientItem.propTypes = {
   onClick: PropTypes.func.isRequired,
-  ingredient: PropTypes.shape(
-    {
-      calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-    _id: PropTypes.string.isRequired,
-    })
+  ingredient: PropTypes.shape(IngredientType)
 }
 
 export default IngredientItem;
