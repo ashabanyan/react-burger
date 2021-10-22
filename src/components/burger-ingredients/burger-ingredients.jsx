@@ -1,19 +1,20 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { Scrollbar } from "react-scrollbars-custom";
-import PropTypes from 'prop-types';
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredient-details/ingredient-details'
+import { BurgerContext } from "../../context/burgerContext";
 
 const tab_items = ["Булки", "Соусы", "Начинки"];
 
-const BurgerIngredients = ({ingredients}) => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");
   const [active, setActive] = useState(false);
   const [modalData, setModalData] = useState();
-  
+  const [orderInfo, setOrderInfo] = useContext(BurgerContext);
+
   const handleOpenModal = (data) => {
     setActive(true);
     setModalData(data)
@@ -44,21 +45,21 @@ const BurgerIngredients = ({ingredients}) => {
           ))}
         </div>
         
-        <Scrollbar style={{ height: 700 }}>
+        <Scrollbar style={{ height: 600 }}>
           
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Булки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {orderInfo && orderInfo.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Соусы</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === "sauce" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {orderInfo && orderInfo.map((item, index) => item.type === "sauce" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}>Начинки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {ingredients.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {orderInfo && orderInfo.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
           
         </Scrollbar>
@@ -72,25 +73,6 @@ const BurgerIngredients = ({ingredients}) => {
       </section>
   );
   
-}
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape(
-    {
-      calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-    _id: PropTypes.string.isRequired,
-    })
-  )
 }
 
 export default BurgerIngredients;

@@ -3,11 +3,12 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "../app/app.module.css";
-import order from "../../utils/order.js";
 import { GET_INGREDIENTS_URL } from "../../constants/constants";
+import { BurgerContext } from "../../context/burgerContext";
 
 const App = () => {
-  const [data, setData] = useState([]);
+  const orderState = useState();
+  const [orderInfoState, setOrderInfoState] = orderState;
 
   useEffect(() => {
     try {
@@ -19,11 +20,12 @@ const App = () => {
           return Promise.reject(`Ошибка ${res.status}`);
         })
         .then((result) => {
-          setData(result.data);
+          setOrderInfoState(result.data);
         });
     } catch (error) {
       console.error("При выполнении запроса возникла ошибка: ", error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -31,8 +33,10 @@ const App = () => {
       <AppHeader />
       <main className={styles.main_container}>
         <div className={`${styles.ingredients_block}`}>
-          <BurgerIngredients ingredients={data} />
-          <BurgerConstructor orderInfo={order} />
+          <BurgerContext.Provider value={orderState}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </BurgerContext.Provider>
         </div>
       </main>
     </>
