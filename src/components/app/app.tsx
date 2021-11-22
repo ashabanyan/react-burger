@@ -33,10 +33,10 @@ const App = () => {
       <AppHeader />
       <main className={styles.main_container}>
         <div className={`${styles.ingredients_block}`}>
-          <BurgerContext.Provider value={orderState}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </BurgerContext.Provider>
+          {/* <BurgerContext.Provider value={orderState}> */}
+          <BurgerIngredients />
+          <BurgerConstructor />
+          {/* </BurgerContext.Provider> */}
         </div>
       </main>
     </>
