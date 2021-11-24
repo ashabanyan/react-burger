@@ -1,12 +1,13 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { Scrollbar } from "react-scrollbars-custom";
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredient-details/ingredient-details'
 import {useDispatch, useSelector} from 'react-redux';
-import { getIngredients, SET_INGREDIENT_MODAL_DATA, DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/burger";
+import { getIngredients } from '../../services/actions/ingredients';
+import { SET_INGREDIENT_MODAL_DATA, DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredientModal";
 
 const tab_items = ["Булки", "Соусы", "Начинки"];
 
@@ -15,7 +16,7 @@ const BurgerIngredients = () => {
   const [active, setActive] = useState(false);
 
   const dispatch = useDispatch();
-  const allIngredients = useSelector(store => store.burger.allIngredients)
+  const { allIngredients } = useSelector(store => store.ingredients)
 
   useEffect(() => {
     dispatch(getIngredients())
@@ -27,7 +28,6 @@ const BurgerIngredients = () => {
       ingredient: data
     })
     setActive(true);
-    
   }
 
   const handleCloseModal = () => {

@@ -1,11 +1,9 @@
-import React from 'react';
 import styles from '../order-details/order-details.module.css'
 import DONE_IMAGE from '../../images/done.png'
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const { orderNumber } = useSelector(store => store.burger);
+  const { orderNumber } = useSelector(store => store.makingOrder);
 
   return (
     <div className={`${styles.content_block} mt-30 mb-30 mr-25 ml-25`}>

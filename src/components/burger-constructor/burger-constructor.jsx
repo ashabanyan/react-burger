@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from 'react';
+import{ useState ,useMemo } from 'react';
 import styles from '../burger-constructor/burger-constructor.module.css';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,78 +6,95 @@ import { Scrollbar } from "react-scrollbars-custom";
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
 import {useDispatch, useSelector} from 'react-redux';
-import { CONVERT_DATA_TO_ORDER } from '../../services/actions/burger';
-import { getOrderNumber } from '../../services/actions/burger';
+import { getOrderNumber } from '../../services/actions/makingOrder';
+import { useDrop } from 'react-dnd';
+import { isObjectEmpty } from '../../utils/js-utils';
+import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
+import { randomKeyGenerate } from '../../utils/js-utils'
 
 const BurgetConstructor = () => {
   const dispatch = useDispatch();
-  const { allIngredients, currentBurgerIngredients, orderNumber } = useSelector(store => store.burger);
+  const { currentOrderBun, currentOrderIngredients } = useSelector(store => store.order);
+  const {allIngredients} = useSelector(store => store.ingredients);
   const [active, setActive] = useState(false)
 
-  useEffect(() => {
-    if (allIngredients && allIngredients.length ) {
-      dispatch({type: CONVERT_DATA_TO_ORDER})
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient', 
+    drop(item) {
+       dispatch({
+        type: ADD_INGREDIENT_INTO_ORDER,
+        ingType: item.type,
+        data: {...allIngredients.find(ing => ing._id === item.id ), id: randomKeyGenerate() }
+      })
     }
-  }, [allIngredients]);
+  })
 
-  const totalPrice = useMemo(() => 
-    currentBurgerIngredients && 
-    currentBurgerIngredients.length && 
-    currentBurgerIngredients.map(item => item.price).reduce((sum, item) => sum + item)
-    ,[currentBurgerIngredients])
+  const totalPrice = useMemo(() => {
+    const bunPrice = currentOrderBun && currentOrderBun.price;
+    const mainPrice = currentOrderIngredients.length && currentOrderIngredients.map(item => item.price).reduce((sum, item) => sum + item);
+    return bunPrice + mainPrice;
+  } ,[currentOrderIngredients, currentOrderBun])
 
   const handleOpenModal = () => {
-    dispatch(getOrderNumber(currentBurgerIngredients))
+    const currentIngredientsIds = [
+      ...currentOrderIngredients,
+      currentOrderBun,
+    ]
+    dispatch(getOrderNumber(currentIngredientsIds))
     setActive(true)
   };
 
   const handleCloseModal = () => setActive(false);
 
+  const deleteIngredient = (id) => dispatch({
+    type: DELETE_INGREDIENT_FROM_ORDER,
+    ingId: id,
+  })
+
   return (
-    <section className={`${styles.section_container} mt-25`}>
+    <section ref={dropTarget} className={`${styles.section_container} mt-25`}>
+
+      {!isObjectEmpty(currentOrderBun) &&
+      <div className="ml-10 mr-5 mb-4">
+        <ConstructorElement
+          type="top"
+          text={currentOrderBun.name  + '(верх)'}
+          price={currentOrderBun.price}
+          thumbnail={currentOrderBun.image}
+          isLocked={true}
+        />
+      </div>}
       
-      {currentBurgerIngredients && currentBurgerIngredients.length && (
-          
-          <>
-            <div className="ml-10 mr-5 mb-4">
+      {!!currentOrderIngredients.length && 
+        <Scrollbar style={{ height: 180 }}>
+          <div className={styles.main_block}>
+            {currentOrderIngredients.map((item) => (
+            <div key={item.id} className={`${styles.element_block} mb-4 mr-4`} >
+              <DragIcon type="primary"  />
               <ConstructorElement
-                type="top"
-                text={currentBurgerIngredients.find(item => item.type === 'bun').name  + '(верх)'}
-                price={currentBurgerIngredients.find(item => item.type === 'bun').price}
-                thumbnail={currentBurgerIngredients.find(item => item.type === 'bun').image}
-                isLocked={true}
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+                handleClose={() => deleteIngredient(item.id)}
               />
             </div>
-
-            <Scrollbar style={{ height: 180 }}>
-              <div className={styles.main_block}>
-                {currentBurgerIngredients.filter(item => item.type !== 'bun').map((item, index) => (
-                <div key={index} className={`${styles.element_block} mb-4 mr-4`} >
-                  <DragIcon type="primary"  />
-                  <ConstructorElement
-            
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  />
-                </div>
-                ))}
-              </div>
-            </Scrollbar>
-
-            <div className="ml-10 mt-4">
-              <ConstructorElement
-                type="bottom"
-                text={currentBurgerIngredients.find(item => item.type === 'bun').name  + '(верх)'}
-                price={currentBurgerIngredients.find(item => item.type === 'bun').price}
-                thumbnail={currentBurgerIngredients.find(item => item.type === 'bun').image}
-                isLocked={true}
-              />
-            </div>
-          </>
-      )}
+            ))}
+          </div>
+        </Scrollbar>
+      }
       
-      {totalPrice && (
+      {!isObjectEmpty(currentOrderBun) &&
+      <div className="ml-10 mt-4">
+        <ConstructorElement
+          type="bottom"
+          text={currentOrderBun.name  + '(низ)'}
+          price={currentOrderBun.price}
+          thumbnail={currentOrderBun.image}
+          isLocked={true}
+        />
+      </div>}
+
+      {!!totalPrice && (
         <div className={`${styles.total} mt-10 mr-4`}>
           <div className={`${styles.total_price} mr-10`}>
             <p className={`${styles.total_price_number} text text_type_main-default mr-2`}>{`${totalPrice}`}</p>

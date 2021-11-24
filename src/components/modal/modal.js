@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import styles from '../modal/modal.module.css'
 import ModalOverlay from '../modal-overlay/modal-overlay'

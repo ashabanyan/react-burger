@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+// ---------- LOCAL ----------
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "../app/app.module.css";
-import { GET_INGREDIENTS_URL } from "../../constants/constants";
 
 const App = () => {
-  const orderState = useState();
-  const [orderInfoState, setOrderInfoState] = orderState;
-
-  useEffect(() => {
-    try {
-      fetch(GET_INGREDIENTS_URL)
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Ошибка ${res.status}`);
-        })
-        .then((result) => {
-          setOrderInfoState(result.data);
-        });
-    } catch (error) {
-      console.error("При выполнении запроса возникла ошибка: ", error);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <AppHeader />
       <main className={styles.main_container}>
         <div className={`${styles.ingredients_block}`}>
-          <BurgerIngredients />
-          <BurgerConstructor />
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
         </div>
       </main>
     </>

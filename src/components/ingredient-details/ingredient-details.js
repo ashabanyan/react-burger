@@ -1,11 +1,8 @@
-import {useEffect} from 'react';
 import styles from '../ingredient-details/ingredient-details.module.css'
-import PropTypes from 'prop-types';
-import IngredientType from '../../utils/types'
-import {useDispatch, useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
-  const ingredient = useSelector(store => store.burger.currentViewIngredient);
+  const ingredient = useSelector(store => store.ingredientModal.currentViewIngredient);
   
   return (
     <div className="mt-10">
