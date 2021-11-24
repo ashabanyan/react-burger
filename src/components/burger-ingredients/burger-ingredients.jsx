@@ -5,7 +5,6 @@ import IngredientItem from "../ingredient-item/ingredient-item";
 import { Scrollbar } from "react-scrollbars-custom";
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredient-details/ingredient-details'
-import { BurgerContext } from "../../context/burgerContext";
 import {useDispatch, useSelector} from 'react-redux';
 import { getIngredients, SET_INGREDIENT_MODAL_DATA, DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/burger";
 

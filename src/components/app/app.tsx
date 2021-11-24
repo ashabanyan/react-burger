@@ -4,7 +4,6 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "../app/app.module.css";
 import { GET_INGREDIENTS_URL } from "../../constants/constants";
-import { BurgerContext } from "../../context/burgerContext";
 
 const App = () => {
   const orderState = useState();
@@ -33,10 +32,8 @@ const App = () => {
       <AppHeader />
       <main className={styles.main_container}>
         <div className={`${styles.ingredients_block}`}>
-          {/* <BurgerContext.Provider value={orderState}> */}
           <BurgerIngredients />
           <BurgerConstructor />
-          {/* </BurgerContext.Provider> */}
         </div>
       </main>
     </>
