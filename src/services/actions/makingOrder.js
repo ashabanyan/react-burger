@@ -2,9 +2,9 @@
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
+export const CLEAR_ORDER_NUMBER = 'CLEAR_ORDER_NUMBER';
 
 export const getOrderNumber = (currentBurgerIngredients) => {
-  console.log({ "ingredients": currentBurgerIngredients && currentBurgerIngredients.map(item => item._id)})
   return async function(dispatch) {
     dispatch({type: GET_ORDER_NUMBER_REQUEST});
 

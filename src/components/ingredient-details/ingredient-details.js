@@ -1,5 +1,6 @@
-import styles from '../ingredient-details/ingredient-details.module.css'
 import { useSelector } from 'react-redux';
+// ---------- LOCAL ----------
+import styles from '../ingredient-details/ingredient-details.module.css'
 
 const IngredientDetails = () => {
   const ingredient = useSelector(store => store.ingredientModal.currentViewIngredient);

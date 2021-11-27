@@ -7,13 +7,13 @@ import PropTypes from 'prop-types';
 // ---------- LOCAL ----------
 import styles from '../ingredient-item/ingredient-item.module.css'
 import IngredientType from '../../utils/types'
-
+import { DND_TYPES } from '../../constants/constants';
 
 const IngredientItem = ({ onClick, ingredient }) => {
   const id = ingredient._id;
   const type = ingredient.type;
   const [{isDrag}, dragRef] = useDrag({
-    type: 'ingredient',
+    type: DND_TYPES.ingredient,
     item: {id, type },
     collect: monitor => ({
       isDrag: monitor.isDragging(),

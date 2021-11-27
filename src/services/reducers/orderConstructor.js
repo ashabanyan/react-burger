@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT_INTO_ORDER,
   DELETE_INGREDIENT_FROM_ORDER,
   UPDATE_ORDER_AFTER_DROP,
+  CLEAR_ORDER
 } from '../actions/orderConstructor';
 
 const initialState = {
@@ -35,7 +36,13 @@ export const orderConstructorReducer = (state = initialState, action) => {
         currentOrderIngredients: action.data
       }
     }
+    case CLEAR_ORDER: {
+      return {
+        ...state, 
+        currentOrderBun: {},
+        currentOrderIngredients: [],
+      }
+    }
     default: return { ...state }
   }
-
 }

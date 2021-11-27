@@ -2,6 +2,7 @@ import {
   GET_ORDER_NUMBER_REQUEST, 
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
+  CLEAR_ORDER_NUMBER
 } from '../actions/makingOrder';
 
 const initialState = {
@@ -28,6 +29,12 @@ export const makingOrderReducer = (state = initialState, action) => {
         ...state,
         getOrderFailed: true,
         getOrderRequest: false,
+      }
+    }
+    case CLEAR_ORDER_NUMBER: {
+      return {
+        ...state, 
+        orderNumber: '',
       }
     }
     default: return state;

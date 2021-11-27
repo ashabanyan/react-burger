@@ -1,19 +1,22 @@
 import{ useState ,useMemo, useEffect } from 'react';
-import styles from '../burger-constructor/burger-constructor.module.css';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
+import {useDispatch, useSelector} from 'react-redux';
+import { useDrop } from 'react-dnd';
+// ---------- LOCAL ----------
+import styles from '../burger-constructor/burger-constructor.module.css';
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
-import {useDispatch, useSelector} from 'react-redux';
-import { getOrderNumber } from '../../services/actions/makingOrder';
-import { useDrag, useDrop } from 'react-dnd';
 import { isObjectEmpty } from '../../utils/js-utils';
-import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
 import { randomKeyGenerate } from '../../utils/js-utils'
-import { useRef } from 'react';
 import IngredientItemConstructor from '../ingredient-item-constructor/ingredient-item-constructor';
-import { UPDATE_ORDER_AFTER_DROP } from '../../services/actions/orderConstructor';
+import { DND_TYPES } from '../../constants/constants';
+// ---------- REDUX ACTIONS ----------
+import { getOrderNumber } from '../../services/actions/makingOrder';
+import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
+import { UPDATE_ORDER_AFTER_DROP, CLEAR_ORDER } from '../../services/actions/orderConstructor';
+import { CLEAR_ORDER_NUMBER } from '../../services/actions/makingOrder';
 
 const BurgetConstructor = () => {
   const dispatch = useDispatch();
@@ -21,14 +24,19 @@ const BurgetConstructor = () => {
   const {allIngredients} = useSelector(store => store.ingredients);
   const [active, setActive] = useState(false)
 
-  const [, dropTarget] = useDrop({
-    accept: 'ingredient', 
+  const [{isOver}, dropTarget] = useDrop({
+    accept: DND_TYPES.ingredient, 
     drop(item) {
        dispatch({
         type: ADD_INGREDIENT_INTO_ORDER,
         ingType: item.type,
         data: {...allIngredients.find(ing => ing._id === item.id ), id: randomKeyGenerate() }
       })
+    },
+    collect(monitor) {
+      return {
+        isOver: monitor.isOver()
+      }
     }
   })
 
@@ -47,7 +55,11 @@ const BurgetConstructor = () => {
     setActive(true)
   };
 
-  const handleCloseModal = () => setActive(false);
+  const handleCloseModal = () => {
+    dispatch({type: CLEAR_ORDER})
+    dispatch({type: CLEAR_ORDER_NUMBER})
+    setActive(false)
+  };
 
   const deleteIngredient = (id) => dispatch({
     type: DELETE_INGREDIENT_FROM_ORDER,
@@ -55,9 +67,6 @@ const BurgetConstructor = () => {
   })
 
   const moveCard = (dragIndex, hoverIndex) => {
-    console.log('dragIndex >>>>', dragIndex)
-    console.log('hoverIndex >>>>', hoverIndex)
-    console.log(hoverIndex)
     const dragCard = currentOrderIngredients[dragIndex];
     const newOrderIngredients = [...currentOrderIngredients];
     newOrderIngredients.splice(dragIndex, 1);
@@ -72,7 +81,7 @@ const BurgetConstructor = () => {
   const constuctorHeight = useMemo(() => currentOrderIngredients.length > 2 ? 265 : 88 * currentOrderIngredients.length, [currentOrderIngredients]) ;
 
   return (
-    <section ref={dropTarget} className={`${styles.section_container} mt-25`}>
+    <section ref={dropTarget} className={`${styles.section_container} ${isOver ? styles.section_border : ''} mt-25`}>
 
       {!isObjectEmpty(currentOrderBun) &&
       <div className="ml-10 mr-5 mb-4">

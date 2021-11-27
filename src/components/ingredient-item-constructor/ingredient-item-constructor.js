@@ -1,16 +1,16 @@
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from 'react-dnd';
+// ---------- LOCAL ----------
 import styles from '../ingredient-item-constructor/ingredient-item-constructor.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_ORDER_AFTER_DROP } from '../../services/actions/orderConstructor';
+import { DND_TYPES } from '../../constants/constants';
 
 const IngredientItemConstructor = ({item, index, id, deleteIngredient, moveCard}) => {
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
-    accept: 'ingredient_constructor',
+    accept: DND_TYPES.sortable_ingredient,
     collect(monitor) {
       return {
           handlerId: monitor.getHandlerId(),
@@ -42,7 +42,7 @@ const IngredientItemConstructor = ({item, index, id, deleteIngredient, moveCard}
   });
 
   const [{ isDragging }, drag] = useDrag({
-    type: 'ingredient_constructor',
+    type: DND_TYPES.sortable_ingredient,
     item: () => {
         return {  id, index };
     },

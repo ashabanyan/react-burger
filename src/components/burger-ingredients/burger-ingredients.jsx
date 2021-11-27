@@ -1,15 +1,16 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect, useRef } from 'react';
-import styles from "../burger-ingredients/burger-ingredients.module.css";
-import IngredientItem from "../ingredient-item/ingredient-item";
 import { Scrollbar } from "react-scrollbars-custom";
 import Modal from '../modal/modal'
-import IngredientsDetails from '../ingredient-details/ingredient-details'
 import {useDispatch, useSelector} from 'react-redux';
+// ---------- LOCAL ----------
+import styles from "../burger-ingredients/burger-ingredients.module.css";
+import IngredientItem from "../ingredient-item/ingredient-item";
+import IngredientsDetails from '../ingredient-details/ingredient-details'
+import { tab_items } from '../../constants/constants';
+// ---------- REDUX ACTIONS ----------
 import { getIngredients } from '../../services/actions/ingredients';
 import { SET_INGREDIENT_MODAL_DATA, DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredientModal";
-
-const tab_items = ["Булки", "Соусы", "Начинки"];
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");
@@ -20,6 +21,7 @@ const BurgerIngredients = () => {
 
   useEffect(() => {
     dispatch(getIngredients())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleOpenModal = (data) => {;
@@ -82,7 +84,6 @@ const BurgerIngredients = () => {
         </div>
         
         <Scrollbar onScroll={handleScroll} style={{ height: 600 }}>
-          
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`} ref={bunsRef}>Булки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
               {allIngredients && allIngredients.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
@@ -97,7 +98,6 @@ const BurgerIngredients = () => {
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
               {allIngredients && allIngredients.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
             </ul>
-          
         </Scrollbar>
 
         {active && (

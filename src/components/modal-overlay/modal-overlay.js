@@ -1,5 +1,6 @@
-import styles from '../modal-overlay/modal-overlay.module.css'
 import PropTypes from 'prop-types';
+// ---------- LOCAL ----------
+import styles from '../modal-overlay/modal-overlay.module.css';
 
 const ModalOverlay = ({ onClick }) => {
   return (
