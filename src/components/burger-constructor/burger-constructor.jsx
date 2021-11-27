@@ -1,4 +1,4 @@
-import{ useState ,useMemo, useEffect } from 'react';
+import{ useState ,useMemo } from 'react';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
