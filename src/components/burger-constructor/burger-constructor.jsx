@@ -1,4 +1,4 @@
-import{ useState ,useMemo } from 'react';
+import{ useState ,useMemo, useEffect } from 'react';
 import styles from '../burger-constructor/burger-constructor.module.css';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,10 +7,13 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
 import {useDispatch, useSelector} from 'react-redux';
 import { getOrderNumber } from '../../services/actions/makingOrder';
-import { useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 import { isObjectEmpty } from '../../utils/js-utils';
 import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
 import { randomKeyGenerate } from '../../utils/js-utils'
+import { useRef } from 'react';
+import IngredientItemConstructor from '../ingredient-item-constructor/ingredient-item-constructor';
+import { UPDATE_ORDER_AFTER_DROP } from '../../services/actions/orderConstructor';
 
 const BurgetConstructor = () => {
   const dispatch = useDispatch();
@@ -51,6 +54,23 @@ const BurgetConstructor = () => {
     ingId: id,
   })
 
+  const moveCard = (dragIndex, hoverIndex) => {
+    console.log('dragIndex >>>>', dragIndex)
+    console.log('hoverIndex >>>>', hoverIndex)
+    console.log(hoverIndex)
+    const dragCard = currentOrderIngredients[dragIndex];
+    const newOrderIngredients = [...currentOrderIngredients];
+    newOrderIngredients.splice(dragIndex, 1);
+    newOrderIngredients.splice(hoverIndex, 0, dragCard);
+
+    dispatch({
+      type: UPDATE_ORDER_AFTER_DROP,
+      data: newOrderIngredients,
+    })
+  }
+
+  const constuctorHeight = useMemo(() => currentOrderIngredients.length > 2 ? 265 : 88 * currentOrderIngredients.length, [currentOrderIngredients]) ;
+
   return (
     <section ref={dropTarget} className={`${styles.section_container} mt-25`}>
 
@@ -58,6 +78,7 @@ const BurgetConstructor = () => {
       <div className="ml-10 mr-5 mb-4">
         <ConstructorElement
           type="top"
+          key={currentOrderBun.id + 'верх'}
           text={currentOrderBun.name  + '(верх)'}
           price={currentOrderBun.price}
           thumbnail={currentOrderBun.image}
@@ -66,27 +87,17 @@ const BurgetConstructor = () => {
       </div>}
       
       {!!currentOrderIngredients.length && 
-        <Scrollbar style={{ height: 180 }}>
-          <div className={styles.main_block}>
-            {currentOrderIngredients.map((item) => (
-            <div key={item.id} className={`${styles.element_block} mb-4 mr-4`} >
-              <DragIcon type="primary"  />
-              <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                handleClose={() => deleteIngredient(item.id)}
-              />
-            </div>
-            ))}
+        <Scrollbar style={{ height: constuctorHeight }}>
+          <div className={styles.main_block} >
+            {currentOrderIngredients.map((item, index) => (<IngredientItemConstructor key={item.id} item={item} id={item.id} index={index} deleteIngredient={deleteIngredient} moveCard={moveCard}/>))}
           </div>
-        </Scrollbar>
-      }
+        </Scrollbar>}
       
       {!isObjectEmpty(currentOrderBun) &&
       <div className="ml-10 mt-4">
         <ConstructorElement
           type="bottom"
+          key={currentOrderBun.id + 'низ'}
           text={currentOrderBun.name  + '(низ)'}
           price={currentOrderBun.price}
           thumbnail={currentOrderBun.image}
