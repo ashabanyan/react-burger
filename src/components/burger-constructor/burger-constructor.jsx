@@ -1,90 +1,120 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
-import styles from '../burger-constructor/burger-constructor.module.css';
+import{ useState ,useMemo } from 'react';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { DragIcon, CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
+import {useDispatch, useSelector} from 'react-redux';
+import { useDrop } from 'react-dnd';
+// ---------- LOCAL ----------
+import styles from '../burger-constructor/burger-constructor.module.css';
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details';
-import { BurgerContext } from "../../context/burgerContext";
-
-const initialTotalPrice = { count: 0};
-
-const totalPriceCounter = (state, action) => action.map(item => item.price).reduce((sum, item) => sum + item)
-
+import { isObjectEmpty } from '../../utils/js-utils';
+import { randomKeyGenerate } from '../../utils/js-utils'
+import IngredientItemConstructor from '../ingredient-item-constructor/ingredient-item-constructor';
+import { DND_TYPES } from '../../constants/constants';
+// ---------- REDUX ACTIONS ----------
+import { getOrderNumber } from '../../services/actions/makingOrder';
+import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
+import { UPDATE_ORDER_AFTER_DROP, CLEAR_ORDER } from '../../services/actions/orderConstructor';
+import { CLEAR_ORDER_NUMBER } from '../../services/actions/makingOrder';
 
 const BurgetConstructor = () => {
+  const dispatch = useDispatch();
+  const { currentOrderBun, currentOrderIngredients } = useSelector(store => store.order);
+  const {allIngredients} = useSelector(store => store.ingredients);
   const [active, setActive] = useState(false)
-  const [orderNumber, setOrderNumber] = useState();
-  const [orderInfo, setOrderInfo] = useContext(BurgerContext);
 
-  const [totalPrice, dispatch] = useReducer(totalPriceCounter, initialTotalPrice );
-  
-  useEffect(() => {
-    orderInfo && dispatch(orderInfo)
-  }, [orderInfo])
+  const [{isOver}, dropTarget] = useDrop({
+    accept: DND_TYPES.ingredient, 
+    drop(item) {
+       dispatch({
+        type: ADD_INGREDIENT_INTO_ORDER,
+        ingType: item.type,
+        data: {...allIngredients.find(ing => ing._id === item.id ), id: randomKeyGenerate() }
+      })
+    },
+    collect(monitor) {
+      return {
+        isOver: monitor.isOver()
+      }
+    }
+  })
 
-  const handleOpenModal = async () => {
-    const response = await fetch("https://norma.nomoreparties.space/api/orders", 
-    {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }, 
-      method: 'POST', 
-      body: JSON.stringify({ "ingredients": orderInfo && orderInfo.map(item => item._id)})
-    });
-    const result = await response.json();
-    setOrderNumber(result.order.number);
+  const totalPrice = useMemo(() => {
+    const bunPrice = currentOrderBun && currentOrderBun.price;
+    const mainPrice = currentOrderIngredients.length && currentOrderIngredients.map(item => item.price).reduce((sum, item) => sum + item);
+    return bunPrice + mainPrice;
+  } ,[currentOrderIngredients, currentOrderBun])
 
+  const handleOpenModal = () => {
+    const currentIngredientsIds = [
+      ...currentOrderIngredients,
+      currentOrderBun,
+    ]
+    dispatch(getOrderNumber(currentIngredientsIds))
     setActive(true)
   };
-  const handleCloseModal = () => setActive(false);
+
+  const handleCloseModal = () => {
+    dispatch({type: CLEAR_ORDER})
+    dispatch({type: CLEAR_ORDER_NUMBER})
+    setActive(false)
+  };
+
+  const deleteIngredient = (id) => dispatch({
+    type: DELETE_INGREDIENT_FROM_ORDER,
+    ingId: id,
+  })
+
+  const moveCard = (dragIndex, hoverIndex) => {
+    const dragCard = currentOrderIngredients[dragIndex];
+    const newOrderIngredients = [...currentOrderIngredients];
+    newOrderIngredients.splice(dragIndex, 1);
+    newOrderIngredients.splice(hoverIndex, 0, dragCard);
+
+    dispatch({
+      type: UPDATE_ORDER_AFTER_DROP,
+      data: newOrderIngredients,
+    })
+  }
+
+  const constuctorHeight = useMemo(() => currentOrderIngredients.length > 2 ? 265 : 88 * currentOrderIngredients.length, [currentOrderIngredients]) ;
 
   return (
-    <section className={`${styles.section_container} mt-25`}>
+    <section ref={dropTarget} className={`${styles.section_container} ${isOver ? styles.section_border : ''} mt-25`}>
+
+      {!isObjectEmpty(currentOrderBun) &&
+      <div className="ml-10 mr-5 mb-4">
+        <ConstructorElement
+          type="top"
+          key={currentOrderBun.id + 'верх'}
+          text={currentOrderBun.name  + '(верх)'}
+          price={currentOrderBun.price}
+          thumbnail={currentOrderBun.image}
+          isLocked={true}
+        />
+      </div>}
       
-      {orderInfo && (
-          
-          <>
-            <div className="ml-10 mr-5 mb-4">
-              <ConstructorElement
-                type="top"
-                text={orderInfo.find(item => item.type === 'bun').name  + '(верх)'}
-                price={orderInfo.find(item => item.type === 'bun').price}
-                thumbnail={orderInfo.find(item => item.type === 'bun').image}
-                isLocked={true}
-              />
-            </div>
+      {!!currentOrderIngredients.length && 
+        <Scrollbar style={{ height: constuctorHeight }}>
+          <div className={styles.main_block} >
+            {currentOrderIngredients.map((item, index) => (<IngredientItemConstructor key={item.id} item={item} id={item.id} index={index} deleteIngredient={deleteIngredient} moveCard={moveCard}/>))}
+          </div>
+        </Scrollbar>}
+      
+      {!isObjectEmpty(currentOrderBun) &&
+      <div className="ml-10 mt-4">
+        <ConstructorElement
+          type="bottom"
+          key={currentOrderBun.id + 'низ'}
+          text={currentOrderBun.name  + '(низ)'}
+          price={currentOrderBun.price}
+          thumbnail={currentOrderBun.image}
+          isLocked={true}
+        />
+      </div>}
 
-            <Scrollbar style={{ height: 180 }}>
-              <div className={styles.main_block}>
-                {orderInfo.filter(item => item.type !== 'bun').map((item, index) => (
-                <div key={index} className={`${styles.element_block} mb-4 mr-4`} >
-                  <DragIcon type="primary"  />
-                  <ConstructorElement
-            
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  />
-                </div>
-                ))}
-              </div>
-            </Scrollbar>
-
-            <div className="ml-10 mt-4">
-              <ConstructorElement
-                type="bottom"
-                text={orderInfo.find(item => item.type === 'bun').name  + '(верх)'}
-                price={orderInfo.find(item => item.type === 'bun').price}
-                thumbnail={orderInfo.find(item => item.type === 'bun').image}
-                isLocked={true}
-              />
-            </div>
-          </>
-      )}
-
-      {totalPrice && (
+      {!!totalPrice && (
         <div className={`${styles.total} mt-10 mr-4`}>
           <div className={`${styles.total_price} mr-10`}>
             <p className={`${styles.total_price_number} text text_type_main-default mr-2`}>{`${totalPrice}`}</p>
@@ -98,12 +128,10 @@ const BurgetConstructor = () => {
 
       {active && (
         <Modal onClick={handleCloseModal}>
-          <OrderDetails orderNumber={orderNumber}/>
+          <OrderDetails />
         </Modal>
         )
       }
-          
-      
     </section>
   )
 }

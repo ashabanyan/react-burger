@@ -1,9 +1,10 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+// ---------- LOCAL ----------
 import styles from '../order-details/order-details.module.css'
 import DONE_IMAGE from '../../images/done.png'
-import PropTypes from 'prop-types';
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+  const { orderNumber } = useSelector(store => store.makingOrder);
 
   return (
     <div className={`${styles.content_block} mt-30 mb-30 mr-25 ml-25`}>
@@ -14,10 +15,6 @@ const OrderDetails = ({ orderNumber }) => {
       <p className={`${styles.grey_text} text text_type_main-default mt-2`}>Дождитесь готовности на орбитальной станции</p>
     </div>
   )
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;
