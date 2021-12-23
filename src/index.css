@@ -93,6 +93,11 @@ select {
 
 /* --------------------------------------------MY OWN SELECTORS--------------------------------------------------- */
 
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
 .ScrollbarsCustom-Thumb {
   background: #8585ad !important;
   height: 40px !important;

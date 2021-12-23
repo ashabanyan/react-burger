@@ -5,16 +5,17 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../app-header/app-header.module.css";
+import { NavLink } from "react-router-dom";
 
 const leftMenu = [
   {
     title: "Конструктор",
-    url: "#",
+    url: "/",
     icon: <BurgerIcon type="primary" />,
   },
   {
     title: "Лента заказов",
-    url: "#",
+    url: "/orders",
     icon: <ListIcon type="primary" />,
   },
 ];
@@ -22,7 +23,7 @@ const leftMenu = [
 const rightMenu = [
   {
     title: "Личный кабинет",
-    url: "#",
+    url: "/profile",
     icon: <ProfileIcon type="primary" />,
   },
 ];
@@ -36,15 +37,16 @@ const AppHeader = () => {
             className={`${styles.menu_list} ${styles.left_menu} ${styles.header_element}`}
           >
             {leftMenu.map((item, index) => (
-              <li
+              <NavLink
+                exact
+                to={{ pathname: item.url }}
                 key={index}
-                className={`${styles.menu_list_item} ${
-                  index !== 0 ? "ml-10" : ""
-                }`}
+                className={`${styles.menu_list_item} text text_type_main-default text_color_inactive`}
+                activeStyle={{ color: "white" }}
               >
                 {item.icon}
-                <p className="text text_type_main-default ml-2">{item.title}</p>
-              </li>
+                <span className="ml-2">{item.title}</span>
+              </NavLink>
             ))}
           </ul>
 
@@ -54,10 +56,15 @@ const AppHeader = () => {
             className={`${styles.menu_list} ${styles.right_menu} ${styles.header_element}`}
           >
             {rightMenu.map((item, index) => (
-              <li key={index} className={styles.menu_list_item}>
+              <NavLink
+                to={{ pathname: "/profile" }}
+                key={index}
+                className={`${styles.menu_list_item} text text_type_main-default text_color_inactive`}
+                activeStyle={{ color: "white" }}
+              >
                 {item.icon}
-                <p className="text text_type_main-default">{item.title}</p>
-              </li>
+                <span className="ml-2">{item.title}</span>
+              </NavLink>
             ))}
           </ul>
         </nav>
