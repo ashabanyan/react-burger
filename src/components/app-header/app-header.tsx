@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../app-header/app-header.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const leftMenu = [
   {
@@ -50,7 +50,9 @@ const AppHeader = () => {
             ))}
           </ul>
 
-          <Logo />
+          <Link to={{ pathname: "/" }}>
+            <Logo />
+          </Link>
 
           <ul
             className={`${styles.menu_list} ${styles.right_menu} ${styles.header_element}`}

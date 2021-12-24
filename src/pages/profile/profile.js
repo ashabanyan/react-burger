@@ -16,13 +16,11 @@ const ProfilePage = ({ type }) => {
   const { user } = useSelector(store => store.auth);
 
   const logoutClicked = () => {
-    console.log('logout >>>', user)
     dispatch(logout())
     !user && history.replace({ pathname: "/login" })
   }
 
   useEffect(() => {
-    console.log('effect >>>', !user)
     if (!user && !!localStorage.getItem("access_token")) {
       history.replace({ pathname: "/login" })
     }

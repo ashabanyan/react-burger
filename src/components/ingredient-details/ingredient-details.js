@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 // ---------- LOCAL ----------
 import styles from '../ingredient-details/ingredient-details.module.css'
 import { SET_INGREDIENT_MODAL_DATA } from '../../services/actions/ingredients';
@@ -51,8 +52,11 @@ const IngredientDetails = ({ type }) => {
         </div>
       )}
     </>
-    
   )
+}
+
+IngredientDetails.propTypes = {
+  type: PropTypes.string,
 }
 
 export default IngredientDetails;

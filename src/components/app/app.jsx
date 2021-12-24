@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useLocation, useHistory} from 'react-router-dom';
 // ---------- LOCAL ----------
+import AppHeader from "../app-header/app-header";
 import MainPage from "../../pages/main/main";
 import LoginPage from "../../pages/login/login";
 import RegisterPage from "../../pages/register/register";
@@ -10,12 +11,12 @@ import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import ProtectedRoute from "../protected-route/protected-route";
-import Layout from "../layout/layout";
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredient-details/ingredient-details'
 import { DELETE_INGREDIENT_MODAL_DATA } from '../../services/actions/ingredients';
 import { getIngredients } from '../../services/actions/ingredients';
 import { getUser } from '../../services/actions/auth';
+import NotFoundPage from '../../pages/not-found/not-found';
 
 const App = () => {
 
@@ -34,7 +35,7 @@ const App = () => {
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    let background = location.state && location.state.background;
+    const background = location.state && location.state.background;
 
     const handleModalClose = () => {
       dispatch({type: DELETE_INGREDIENT_MODAL_DATA})
@@ -43,67 +44,55 @@ const App = () => {
 
     return (
       <>
-      <Switch location={background || location}>
-        <Route path="/" exact>
-          <Layout>
+        <AppHeader />
+        <Switch location={background || location}>
+          <Route path="/" exact>
             <MainPage />
-          </Layout>
-        </Route>
+          </Route>
 
-        <Route path="/ingredients/:ingredientId" exact>
-          <Layout>
+          <Route path="/ingredients/:ingredientId" exact>
             <IngredientsDetails type="single" />
-          </Layout>
-        </Route>
+          </Route>
 
-        <Route path="/login" exact>
-          <Layout>
+          <Route path="/login" exact>
             <LoginPage />
-          </Layout>
-        </Route>
+          </Route>
 
-        <Route path="/register" exact>
-          <Layout>
+          <Route path="/register" exact>
             <RegisterPage />
-          </Layout>
-        </Route>
+          </Route>
 
-        <Route path="/forgot-password" exact>
-          <Layout>
+          <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
-          </Layout>
-        </Route>
+          </Route>
 
-        <Route path="/reset-password" exact>
-          <Layout>
+          <Route path="/reset-password" exact>
             <ResetPasswordPage />
-          </Layout>
-        </Route>
+          </Route>
 
-        <ProtectedRoute path="/profile" exact>
-          <Layout>
+          <ProtectedRoute path="/profile" exact>
             <ProfilePage type="profile" />
-          </Layout>
-        </ProtectedRoute>
+          </ProtectedRoute>
 
-        <ProtectedRoute path="/profile/orders" exact>
-          <Layout>
+          <ProtectedRoute path="/profile/orders" exact>
             <ProfilePage type="history" />
-          </Layout>
-        </ProtectedRoute>
-      </Switch>
+          </ProtectedRoute>
 
-      {background && (
-        <Route
-          path='/ingredients/:ingredientId'
-          children={
-            <Modal onClick={handleModalClose}>
-              <IngredientsDetails />
-            </Modal>
-          }
-        />
-      )}
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
 
+        {background && (
+          <Route
+            path='/ingredients/:ingredientId'
+            children={
+              <Modal onClick={handleModalClose}>
+                <IngredientsDetails />
+              </Modal>
+            }
+          />
+        )}
       </>
     )
   }

@@ -19,7 +19,8 @@ const RegisterPage = () => {
   const onPasswordChange = (e) => setPassword(e.target.value)
   const onEmailChange = (e) => setEmail(e.target.value)
   
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     dispatch(fetchRegistration(email, password, name))
   }
 
@@ -35,7 +36,7 @@ const RegisterPage = () => {
       <div className={styles.login_container}>
         <p className="text text_type_main-default">Регистрация</p>
 
-        <div className={`${styles.form_block} mt-6 mb-20`}>
+        <form onSubmit={handleClick} className={`${styles.form_block} mt-6 mb-20`}>
           <div className="mb-6">
             <Input onChange={onNameChange} value={name} name={'name'} placeholder="Имя" />
           </div>
@@ -45,8 +46,8 @@ const RegisterPage = () => {
           <div className="mb-6">
             <PasswordInput onChange={onPasswordChange} value={password} name={'password'} />
           </div>
-          <Button onClick={handleClick} type="primary" size="medium">Зарегистрироваться</Button>
-        </div>
+          <Button type="primary" size="medium">Зарегистрироваться</Button>
+        </form>
         
         <div className={styles.bottom_info}>
           <p className="text text_type_main-default text_color_inactive">Уже зарегистрированы</p>

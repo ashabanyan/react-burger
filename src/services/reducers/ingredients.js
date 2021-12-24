@@ -36,8 +36,6 @@ export const ingredientReducer = (state = initialState, action) => {
         ingError: true,
       }
     case SET_INGREDIENT_MODAL_DATA:
-      console.log(state.allIngredients)
-      console.log(action.id)
       return {
         ...state, 
         currentViewIngredient: state.allIngredients.find(el => el._id === action.id)

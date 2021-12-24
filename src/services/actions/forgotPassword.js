@@ -7,6 +7,7 @@ export const FORGOT_PASSWORD_ERROR = 'FORGOT_PASSWORD_ERROR';
 
 export const fetchForgotPasswort = (email) => {
   return function(dispatch) {
+    
     dispatch({ type: FORGOT_PASSWORD_REQUEST});
 
     const data = { "email": email };
@@ -19,7 +20,7 @@ export const fetchForgotPasswort = (email) => {
       body: JSON.stringify(data)
     })
       .then(res => res.json())
-      .then(result => dispatch({ type: FORGOT_PASSWORD_SUCCESS }))
+      .then(result => dispatch({ type: FORGOT_PASSWORD_SUCCESS }) )
       .catch(err => dispatch({ type: FORGOT_PASSWORD_ERROR}))
   }
 }

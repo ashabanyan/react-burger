@@ -42,7 +42,8 @@ const UserBlock = () => {
     })
   }
 
-  const onSaveClick = () => {
+  const onSaveClick = (e) => {
+    e.preventDefault()
     userData.name && userData.email && userData.password 
     ? dispatch(patchUser(userData))
     : setIsErrorShown(true)
@@ -65,7 +66,7 @@ const UserBlock = () => {
 
 
   return (
-    <div className="mb-20`">
+    <form onSubmit={onSaveClick} className="mb-20`">
       <div className="mb-6">
         <Input onChange={(name) => handleChange(name)} name={'name'} value={userData.name} placeholder="Имя" />
       </div>
@@ -79,11 +80,11 @@ const UserBlock = () => {
       {isUserDataUpdated && <p className={`text text_type_main-small ${styles.ok_message_info}`}>Данные успешно сохранены</p>}
       {isBtnShown && (
         <div>
-          <Button onClick={onSaveClick} type="primary" size="small">Сохранить</Button>
+          <Button type="primary" size="small">Сохранить</Button>
           <Button onClick={onCancelClick} type="secondary" size="medium">Отмена</Button>
         </div>
       )}
-    </div>
+    </form>
   )
 }
 

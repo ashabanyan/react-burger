@@ -1,5 +1,6 @@
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const ProtectedRoute = ({ children, ...rest }) => {
 
@@ -19,5 +20,9 @@ const ProtectedRoute = ({ children, ...rest }) => {
     />
   );
 } 
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.element.isRequired,
+}
 
 export default ProtectedRoute;

@@ -17,7 +17,8 @@ const ResetPasswordPage = () => {
   const [mailCode, setMailCode] = useState('');
 
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     dispatch(fetchResetPassword(newPassword, mailCode))
   }
 
@@ -41,15 +42,15 @@ const ResetPasswordPage = () => {
         : (
           <>
             <p className="text text_type_main-default">Восстановление пароля</p>
-            <div className={`${styles.form_block} mt-6 mb-20`}>
+            <form onSubmit={handleClick} className={`${styles.form_block} mt-6 mb-20`}>
               <div className="mb-6">
                 <Input onChange={e => setNewPassword(e.target.value)} value={newPassword} name={'new-password'} placeholder="Введите новый пароль"/>
               </div>
               <div className="mb-6">
                 <Input onChange={e => setMailCode(e.target.value)} value={mailCode} name={'mail-code'} placeholder="Введите код из письма" />
               </div>
-              <Button onClick={handleClick} type="primary" size="medium" >Восстановить</Button>
-            </div>
+              <Button type="primary" size="medium" >Восстановить</Button>
+            </form>
             <div className={styles.bottom_info}>
               <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
               <Link to={{ pathname: '/login' }} className={`text text_type_main-default ml-4 ${styles.link}`}>Войти</Link>
@@ -58,8 +59,6 @@ const ResetPasswordPage = () => {
         )
       }
     </div>
-
-    
   )
 }
 

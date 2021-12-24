@@ -17,7 +17,8 @@ const LoginPage = () => {
   const onPasswordChange = (e) => setPassword(e.target.value)
   const onEmailChange = (e) => setEmail(e.target.value)
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     dispatch(fetchAuthorization(email, password))
   }
 
@@ -35,30 +36,28 @@ const LoginPage = () => {
 
 
   return (
-    <>
-      <div className={styles.login_container}>
-        <p className="text text_type_main-default">Вход</p>
+    <div className={styles.login_container}>
+      <p className="text text_type_main-default">Вход</p>
 
-        <div className={`${styles.form_block} mt-6 mb-20`}>
-          <div className="mb-6">
-            <EmailInput onChange={onEmailChange} value={email} name={'email'} />
-          </div>
-          <div className="mb-6">
-            <PasswordInput onChange={onPasswordChange} value={password} name={'password'} />
-          </div>
-          <Button onClick={handleClick} type="primary" size="medium">Войти</Button>
+      <form onSubmit={handleClick} className={`${styles.form_block} mt-6 mb-20`}>
+        <div className="mb-6">
+          <EmailInput onChange={onEmailChange} value={email} name={'email'} />
         </div>
-        
-        <div className={styles.bottom_info}>
-          <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>
-          <Link to={{ pathname: '/register' }} className={`text text_type_main-default ml-4 ${styles.link}`}>Зарегистрироваться</Link>
+        <div className="mb-6">
+          <PasswordInput onChange={onPasswordChange} value={password} name={'password'} />
         </div>
-        <div className={`${styles.bottom_info} mt-4`}>
-          <p className="text text_type_main-default text_color_inactive">Забыли пароль?</p>
-          <Link to={{ pathname: '/forgot-password' }} className={`text text_type_main-default ml-4 ${styles.link}`}>Восстановить пароль</Link>
-        </div>
+        <Button type="primary" size="medium">Войти</Button>
+      </form>
+      
+      <div className={styles.bottom_info}>
+        <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>
+        <Link to={{ pathname: '/register' }} className={`text text_type_main-default ml-4 ${styles.link}`}>Зарегистрироваться</Link>
       </div>
-    </>
+      <div className={`${styles.bottom_info} mt-4`}>
+        <p className="text text_type_main-default text_color_inactive">Забыли пароль?</p>
+        <Link to={{ pathname: '/forgot-password' }} className={`text text_type_main-default ml-4 ${styles.link}`}>Восстановить пароль</Link>
+      </div>
+    </div>
   )
 }
 

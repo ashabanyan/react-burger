@@ -1,5 +1,7 @@
 export const BASE_URL = "https://norma.nomoreparties.space/api"
 
+export const GET_ORDER_NUMBER_URL = BASE_URL + "/orders";
+
 export const GET_INGREDIENTS_URL = BASE_URL + "/ingredients";
 export const FORGOT_PASSWORD_URL = BASE_URL + "/password-reset";
 export const RESET_PASSWORD_URL = BASE_URL + "/password-reset/reset";

@@ -22,6 +22,7 @@ export const fetchRegistration = (email, password, name) => {
       .then(result => {
         if (result.success) {
           localStorage.setItem('refreshToken', result.refreshToken);
+          localStorage.setItem('accessToken', result.accessToken);
           dispatch({ type: REGISTRATION_SUCCESS, data: result })
         }
       })
