@@ -12,6 +12,7 @@ import { isObjectEmpty } from '../../utils/js-utils';
 import { randomKeyGenerate } from '../../utils/js-utils'
 import IngredientItemConstructor from '../ingredient-item-constructor/ingredient-item-constructor';
 import { DND_TYPES } from '../../constants/constants';
+import { useHistory } from 'react-router-dom';
 // ---------- REDUX ACTIONS ----------
 import { getOrderNumber } from '../../services/actions/makingOrder';
 import { ADD_INGREDIENT_INTO_ORDER, DELETE_INGREDIENT_FROM_ORDER } from '../../services/actions/orderConstructor';
@@ -19,9 +20,11 @@ import { UPDATE_ORDER_AFTER_DROP, CLEAR_ORDER } from '../../services/actions/ord
 import { CLEAR_ORDER_NUMBER } from '../../services/actions/makingOrder';
 
 const BurgetConstructor = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { currentOrderBun, currentOrderIngredients } = useSelector(store => store.order);
   const {allIngredients} = useSelector(store => store.ingredients);
+  const { user } = useSelector(store => store.auth);
   const [active, setActive] = useState(false)
 
   const [{isOver}, dropTarget] = useDrop({
@@ -47,12 +50,16 @@ const BurgetConstructor = () => {
   } ,[currentOrderIngredients, currentOrderBun])
 
   const handleOpenModal = () => {
-    const currentIngredientsIds = [
-      ...currentOrderIngredients,
-      currentOrderBun,
-    ]
-    dispatch(getOrderNumber(currentIngredientsIds))
-    setActive(true)
+    if (user) {
+      const currentIngredientsIds = [
+        ...currentOrderIngredients,
+        currentOrderBun,
+      ]
+      dispatch(getOrderNumber(currentIngredientsIds))
+      setActive(true)
+    } else {
+      history.replace({ pathname: '/login' })
+    }
   };
 
   const handleCloseModal = () => {

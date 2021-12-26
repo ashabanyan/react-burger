@@ -4,12 +4,13 @@ import { useMemo } from 'react';
 import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link, useLocation } from 'react-router-dom';
 // ---------- LOCAL ----------
 import styles from '../ingredient-item/ingredient-item.module.css'
 import IngredientType from '../../utils/types'
 import { DND_TYPES } from '../../constants/constants';
 
-const IngredientItem = ({ onClick, ingredient }) => {
+const IngredientItem = ({ ingredient }) => {
   const id = ingredient._id;
   const type = ingredient.type;
   const [{isDrag}, dragRef] = useDrag({
@@ -29,25 +30,28 @@ const IngredientItem = ({ onClick, ingredient }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrderBun, currentOrderIngredients]) 
 
+  const location = useLocation();
+
   return (
-      !isDrag &&
-      <li ref={dragRef} className={`${styles.ingredient_item} mb-10`} onClick={() => onClick(ingredient)}>
-        <img className={styles.image} src={ingredient.image} alt={ingredient.name}/>
+      <Link key={id} to={{ pathname: `/ingredients/${id}`, state: { background: location } }} className={styles.link}>
+        {!isDrag &&
+        <li ref={dragRef} className={`${styles.ingredient_item} mb-10`} >
+          <img className={styles.image} src={ingredient.image} alt={ingredient.name}/>
 
-        <div className={styles.price}>
-          <p className={`${styles.price_text} text text_type_main-small mr-1`}>{ingredient.price}</p>
-          <CurrencyIcon type="primary" />
-        </div>
+          <div className={styles.price}>
+            <p className={`${styles.price_text} text text_type_main-small mr-1`}>{ingredient.price}</p>
+            <CurrencyIcon type="primary" />
+          </div>
 
-        <p className={`${styles.name_text} text text_type_main-default mt-1`}>{ingredient.name}</p>
+          <p className={`${styles.name_text} text text_type_main-default mt-1`}>{ingredient.name}</p>
 
-        <Counter count={counter} size="default" />
-      </li>
+          <Counter count={counter} size="default" />
+        </li>}
+      </Link>
   )
 }
 
 IngredientItem.propTypes = {
-  onClick: PropTypes.func.isRequired,
   ingredient: PropTypes.shape(IngredientType)
 }
 

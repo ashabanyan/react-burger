@@ -35,8 +35,18 @@
 
 .menu_list_item {
   display: flex;
+  text-decoration: none;
+  margin-left: 10px;
 }
 
-.menu-list-item:not(:first-child) {
+.menu_list_item_active {
+  color: white;
+}
+
+.menu_list_item:not(:first-child) {
   margin-left: 10px !important;
+}
+
+.menu_text {
+  margin-left: 5px;
 }

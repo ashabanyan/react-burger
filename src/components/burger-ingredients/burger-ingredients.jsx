@@ -1,41 +1,19 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Scrollbar } from "react-scrollbars-custom";
-import Modal from '../modal/modal'
-import {useDispatch, useSelector} from 'react-redux';
+import { useSelector} from 'react-redux';
+
 // ---------- LOCAL ----------
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import IngredientsDetails from '../ingredient-details/ingredient-details'
 import { tab_items } from '../../constants/constants';
 // ---------- REDUX ACTIONS ----------
-import { getIngredients } from '../../services/actions/ingredients';
-import { SET_INGREDIENT_MODAL_DATA, DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredientModal";
+
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");
-  const [active, setActive] = useState(false);
 
-  const dispatch = useDispatch();
   const { allIngredients } = useSelector(store => store.ingredients)
-
-  useEffect(() => {
-    dispatch(getIngredients())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleOpenModal = (data) => {;
-    dispatch({
-      type: SET_INGREDIENT_MODAL_DATA,
-      ingredient: data
-    })
-    setActive(true);
-  }
-
-  const handleCloseModal = () => {
-    setActive(false);
-    dispatch({type: DELETE_INGREDIENT_MODAL_DATA,})
-  }
 
   const changeTab = (value) => {
     setCurrentTab(value)
@@ -86,26 +64,19 @@ const BurgerIngredients = () => {
         <Scrollbar onScroll={handleScroll} style={{ height: 600 }}>
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`} ref={bunsRef}>Булки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {allIngredients && allIngredients.map((item, index) => item.type === "bun" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {allIngredients && allIngredients.map((item, index) => item.type === "bun" && <IngredientItem  key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`} ref={sauceRef}>Соусы</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {allIngredients && allIngredients.map((item, index) => item.type === "sauce" && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {allIngredients && allIngredients.map((item, index) => item.type === "sauce" && <IngredientItem  key={index} ingredient={item}  />)}
             </ul>
 
             <p className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`} ref={mainRef}>Начинки</p>
             <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
-              {allIngredients && allIngredients.map((item, index) => item.type === 'main' && <IngredientItem onClick={handleOpenModal} key={index} ingredient={item}  />)}
+              {allIngredients && allIngredients.map((item, index) => item.type === 'main' && <IngredientItem key={index} ingredient={item}  />)}
             </ul>
         </Scrollbar>
-
-        {active && (
-          <Modal onClick={handleCloseModal}>
-            <IngredientsDetails />
-          </Modal>
-          )
-        }
       </section>
   );
   

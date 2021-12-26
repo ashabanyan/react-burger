@@ -3,12 +3,15 @@ import {
   GET_INGREDIENTS_REQUEST, 
   GET_INGREDIENTS_SUCCESS, 
   GET_INGREDIENTS_FAILED, 
+  SET_INGREDIENT_MODAL_DATA,
+  DELETE_INGREDIENT_MODAL_DATA,
 } from '../actions/ingredients';
 
 const initialState = {
   ingRequest: false,
   ingError: false,
   allIngredients: [],
+  currentViewIngredient: {},
 }
 
 export const ingredientReducer = (state = initialState, action) => {
@@ -32,6 +35,17 @@ export const ingredientReducer = (state = initialState, action) => {
         ingRequest: false,
         ingError: true,
       }
+    case SET_INGREDIENT_MODAL_DATA:
+      return {
+        ...state, 
+        currentViewIngredient: state.allIngredients.find(el => el._id === action.id)
+      }
+    case DELETE_INGREDIENT_MODAL_DATA: {
+      return {
+        ...state,
+        currentViewIngredient: {}
+      }
+    }
     default: return state;
   }
 }

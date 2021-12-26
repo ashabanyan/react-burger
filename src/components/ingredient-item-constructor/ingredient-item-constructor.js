@@ -2,9 +2,12 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useRef } from "react";
 import { useDrag, useDrop } from 'react-dnd';
+import PropTypes from 'prop-types';
 // ---------- LOCAL ----------
 import styles from '../ingredient-item-constructor/ingredient-item-constructor.module.css';
 import { DND_TYPES } from '../../constants/constants';
+import IngredientType from '../../utils/types'
+
 
 const IngredientItemConstructor = ({item, index, id, deleteIngredient, moveCard}) => {
   const ref = useRef(null);
@@ -71,6 +74,14 @@ const IngredientItemConstructor = ({item, index, id, deleteIngredient, moveCard}
       />
     </div>
   )
+}
+
+IngredientItemConstructor.propTypes = {
+  item: PropTypes.shape(IngredientType).isRequired,
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  deleteIngredient: PropTypes.func.isRequired,
+  moveCard: PropTypes.func.isRequired,
 }
 
 export default IngredientItemConstructor;

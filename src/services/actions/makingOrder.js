@@ -1,3 +1,4 @@
+import { GET_ORDER_NUMBER_URL } from "../../constants/constants";
 // --------------- Экшен для получение номера заказа с сервера ---------------
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
@@ -9,7 +10,7 @@ export const getOrderNumber = (currentBurgerIngredients) => {
     dispatch({type: GET_ORDER_NUMBER_REQUEST});
 
     try {
-      const response = await fetch("https://norma.nomoreparties.space/api/orders", 
+      const response = await fetch(GET_ORDER_NUMBER_URL, 
     {
       headers: {
         'Accept': 'application/json',
