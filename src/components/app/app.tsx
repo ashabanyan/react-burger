@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useLocation, useHistory} from 'react-router-dom';
+import { FC, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 // ---------- LOCAL ----------
 import AppHeader from "../app-header/app-header";
 import MainPage from "../../pages/main/main";
@@ -11,34 +11,47 @@ import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import ProtectedRoute from "../protected-route/protected-route";
-import Modal from '../modal/modal'
-import IngredientsDetails from '../ingredient-details/ingredient-details'
-import { DELETE_INGREDIENT_MODAL_DATA } from '../../services/actions/ingredients';
-import { getIngredients } from '../../services/actions/ingredients';
-import { getUser } from '../../services/actions/auth';
-import NotFoundPage from '../../pages/not-found/not-found';
+import Modal from "../modal/modal";
+import IngredientsDetails from "../ingredient-details/ingredient-details";
+import { DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredients";
+import { getIngredients } from "../../services/actions/ingredients";
+import { getUser } from "../../services/actions/auth";
+import NotFoundPage from "../../pages/not-found/not-found";
+import { RootState } from "../../services/reducers/index";
 
-const App = () => {
+interface LocationElement {
+  hash: string;
+  key: string;
+  pathname: string;
+  search: string;
+  state: any;
+}
 
+interface LocationState {
+  background?: undefined | LocationElement;
+  location?: undefined | LocationElement;
+}
+
+const App: FC = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(store => store.auth)
+  const { user } = useSelector((store: RootState) => store.auth);
 
   useEffect(() => {
-    dispatch(getIngredients())
-    if (!user && !!localStorage.getItem('accessToken')) {
-      dispatch(getUser())
+    dispatch(getIngredients());
+    if (!user && !!localStorage.getItem("accessToken")) {
+      dispatch(getUser());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ModalSwitch = () => {
-    const location = useLocation();
+    const location = useLocation<LocationState>();
     const history = useHistory();
     const dispatch = useDispatch();
     const background = location.state && location.state.background;
 
     const handleModalClose = () => {
-      dispatch({type: DELETE_INGREDIENT_MODAL_DATA})
+      dispatch({ type: DELETE_INGREDIENT_MODAL_DATA });
       history.goBack();
     };
 
@@ -85,7 +98,7 @@ const App = () => {
 
         {background && (
           <Route
-            path='/ingredients/:ingredientId'
+            path="/ingredients/:ingredientId"
             children={
               <Modal onClick={handleModalClose}>
                 <IngredientsDetails />
@@ -94,8 +107,8 @@ const App = () => {
           />
         )}
       </>
-    )
-  }
+    );
+  };
 
   return (
     <BrowserRouter>
