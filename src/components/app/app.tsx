@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { FC, useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 // ---------- LOCAL ----------
@@ -17,7 +17,7 @@ import { DELETE_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredients
 import { getIngredients } from "../../services/actions/ingredients";
 import { getUser } from "../../services/actions/auth";
 import NotFoundPage from "../../pages/not-found/not-found";
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../services/types/index";
 
 interface LocationElement {
   hash: string;

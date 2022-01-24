@@ -13,5 +13,3 @@ export const rootReducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   auth: authReducer,
 });
-
-export type RootState = ReturnType<typeof rootReducer>;

@@ -5,13 +5,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "../../services/hooks";
 import { useDrop } from "react-dnd";
 // ---------- LOCAL ----------
 import styles from "../burger-constructor/burger-constructor.module.css";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { isObjectEmpty } from "../../utils/js-utils";
 import { randomKeyGenerate } from "../../utils/js-utils";
 import IngredientItemConstructor from "../ingredient-item-constructor/ingredient-item-constructor";
 import { DND_TYPES } from "../../constants/constants";
@@ -29,14 +28,17 @@ import {
 import { CLEAR_ORDER_NUMBER } from "../../services/actions/makingOrder";
 // ---------- TYPES ----------
 import { IIngredient, IDragItem } from "../../types/common";
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../services/types/index";
+
+import { useSelector } from "../../services/hooks";
 
 const BurgetConstructor = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { currentOrderBun, currentOrderIngredients } = useSelector(
-    (store: RootState) => store.order
+    (store) => store.order
   );
+
   const { allIngredients } = useSelector(
     (store: RootState): any => store.ingredients
   );
@@ -64,23 +66,27 @@ const BurgetConstructor = () => {
   });
 
   const totalPrice = useMemo(() => {
-    const bunPrice = currentOrderBun && currentOrderBun.price;
-    const mainPrice =
-      currentOrderIngredients.length &&
-      currentOrderIngredients
-        .map((item: IIngredient) => item.price)
-        .reduce((sum: number, item: number) => sum + item);
+    const bunPrice = currentOrderBun ? currentOrderBun.price : 0;
+
+    const mainPrice = currentOrderIngredients
+      ? currentOrderIngredients
+          .map((item: IIngredient) => item.price)
+          .reduce((sum: number, item: number) => sum + item)
+      : 0;
+
     return bunPrice + mainPrice;
   }, [currentOrderIngredients, currentOrderBun]);
 
   const handleOpenModal = () => {
     if (user) {
-      const currentIngredientsIds = [
-        ...currentOrderIngredients,
-        currentOrderBun,
-      ];
-      dispatch(getOrderNumber(currentIngredientsIds));
-      setActive(true);
+      if (currentOrderBun && currentOrderIngredients) {
+        const currentIngredientsIds = [
+          ...currentOrderIngredients,
+          currentOrderBun,
+        ];
+        dispatch(getOrderNumber(currentIngredientsIds));
+        setActive(true);
+      }
     } else {
       history.replace({ pathname: "/login" });
     }
@@ -99,22 +105,24 @@ const BurgetConstructor = () => {
     });
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
-    const dragCard = currentOrderIngredients[dragIndex];
-    const newOrderIngredients = [...currentOrderIngredients];
-    newOrderIngredients.splice(dragIndex, 1);
-    newOrderIngredients.splice(hoverIndex, 0, dragCard);
+    if (currentOrderIngredients) {
+      const dragCard = currentOrderIngredients[dragIndex];
+      const newOrderIngredients = [...currentOrderIngredients];
+      newOrderIngredients.splice(dragIndex, 1);
+      newOrderIngredients.splice(hoverIndex, 0, dragCard);
 
-    dispatch({
-      type: UPDATE_ORDER_AFTER_DROP,
-      data: newOrderIngredients,
-    });
+      dispatch({
+        type: UPDATE_ORDER_AFTER_DROP,
+        data: newOrderIngredients,
+      });
+    }
   };
 
-  const constuctorHeight = useMemo(
+  const constuctorHeight: any = useMemo(
     () =>
-      currentOrderIngredients.length > 2
+      currentOrderIngredients && currentOrderIngredients.length > 2
         ? 265
-        : 88 * currentOrderIngredients.length,
+        : currentOrderIngredients && 88 * currentOrderIngredients.length,
     [currentOrderIngredients]
   );
 
@@ -125,7 +133,7 @@ const BurgetConstructor = () => {
         isOver ? styles.section_border : ""
       } mt-25`}
     >
-      {!isObjectEmpty(currentOrderBun) && (
+      {currentOrderBun && (
         <div className="ml-10 mr-5 mb-4">
           <ConstructorElement
             type="top"
@@ -138,7 +146,7 @@ const BurgetConstructor = () => {
         </div>
       )}
 
-      {!!currentOrderIngredients.length && (
+      {currentOrderIngredients && (
         <Scrollbar style={{ height: constuctorHeight }}>
           <div className={styles.main_block}>
             {currentOrderIngredients.map((item: IIngredient, index: number) => (
@@ -155,7 +163,7 @@ const BurgetConstructor = () => {
         </Scrollbar>
       )}
 
-      {!isObjectEmpty(currentOrderBun) && (
+      {currentOrderBun && (
         <div className="ml-10 mt-4">
           <ConstructorElement
             type="bottom"

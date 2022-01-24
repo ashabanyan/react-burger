@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { logout } from "../../services/actions/auth";
 import { useHistory } from "react-router-dom";
 // LOCAL
@@ -9,7 +9,7 @@ import UserBlock from "../../components/profile-user-block/profile-user-block";
 import OrderHistory from "../../components/order-history/order-history";
 import { useEffect } from "react";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../services/types/index";
 
 interface IProfile {
   type: string;

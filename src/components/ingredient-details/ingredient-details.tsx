@@ -1,12 +1,11 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { useRouteMatch } from "react-router-dom";
-import { useDispatch } from "react-redux";
 // ---------- LOCAL ----------
 import styles from "../ingredient-details/ingredient-details.module.css";
 import { SET_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredients";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../services/types/index";
 
 interface IIngredientDetails {
   type?: string;

@@ -1,7 +1,6 @@
 import { IIngredient } from '../types/common';
 
-export const isObjectEmpty = (obj: IIngredient) => {
-  console.log(obj)
+export const isObjectEmpty = (obj: IIngredient | {}) => {
   for (let key in obj) {
     return false;
   }
