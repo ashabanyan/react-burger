@@ -1,8 +1,8 @@
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../redux/hooks";
 import PropTypes from "prop-types";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 import { FC } from "react";
 
 interface IProtectedRoute {

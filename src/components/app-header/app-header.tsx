@@ -15,7 +15,7 @@ const leftMenu = [
   },
   {
     title: "Лента заказов",
-    url: "/orders",
+    url: "/feed",
     icon: <ListIcon type="primary" />,
   },
 ];

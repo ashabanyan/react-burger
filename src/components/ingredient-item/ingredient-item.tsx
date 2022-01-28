@@ -2,14 +2,14 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../redux/hooks";
 
 import { Link, useLocation } from "react-router-dom";
 // ---------- LOCAL ----------
 import styles from "../ingredient-item/ingredient-item.module.css";
 import { DND_TYPES } from "../../constants/constants";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 import { IIngredient } from "../../types/common";
 
 interface IIngredientItem {

@@ -5,13 +5,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory, useLocation } from "react-router-dom";
 // LOCAL
 import styles from "./login.module.css";
-import { fetchAuthorization } from "../../services/actions/auth";
+import { fetchAuthorization } from "../../redux/actions/auth";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
 type LocationState = {
   from: {

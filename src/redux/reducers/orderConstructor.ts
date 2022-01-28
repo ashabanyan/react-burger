@@ -43,7 +43,6 @@ export const orderConstructorReducer = (state = initialState, action: TOrderCons
       }
     }
     case CLEAR_ORDER: {
-      console.log(action)
       return {
         ...state, 
         currentOrderBun: null,

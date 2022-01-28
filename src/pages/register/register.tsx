@@ -6,13 +6,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./register.module.css";
-import { fetchRegistration } from "../../services/actions/auth";
+import { fetchRegistration } from "../../redux/actions/auth";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
 const RegisterPage = () => {
   const history = useHistory();

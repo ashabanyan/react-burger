@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Scrollbar } from "react-scrollbars-custom";
-import { useDispatch } from "../../services/hooks";
+import { useDispatch } from "../../redux/hooks";
 import { useDrop } from "react-dnd";
 // ---------- LOCAL ----------
 import styles from "../burger-constructor/burger-constructor.module.css";
@@ -16,21 +16,21 @@ import IngredientItemConstructor from "../ingredient-item-constructor/ingredient
 import { DND_TYPES } from "../../constants/constants";
 import { useHistory } from "react-router-dom";
 // ---------- REDUX ACTIONS ----------
-import { getOrderNumber } from "../../services/actions/makingOrder";
+import { getOrderNumber } from "../../redux/actions/makingOrder";
 import {
   ADD_INGREDIENT_INTO_ORDER,
   DELETE_INGREDIENT_FROM_ORDER,
-} from "../../services/actions/orderConstructor";
+} from "../../redux/actions/orderConstructor";
 import {
   UPDATE_ORDER_AFTER_DROP,
   CLEAR_ORDER,
-} from "../../services/actions/orderConstructor";
-import { CLEAR_ORDER_NUMBER } from "../../services/actions/makingOrder";
+} from "../../redux/actions/orderConstructor";
+import { CLEAR_ORDER_NUMBER } from "../../redux/actions/makingOrder";
 // ---------- TYPES ----------
 import { IIngredient, IDragItem } from "../../types/common";
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../redux/hooks";
 
 const BurgetConstructor = () => {
   const history = useHistory();

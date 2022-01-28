@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 // LOCAL
 import App from "./components/app/app";
 import "./index.css";
-import { rootReducer } from "./services/reducers/index";
+import { rootReducer } from "./redux/reducers/index";
 
 export const composeEnhancers =
   (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

@@ -1,10 +1,10 @@
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../redux/hooks";
 
 // ---------- LOCAL ----------
 import styles from "../order-details/order-details.module.css";
 import DONE_IMAGE from "../../images/done.png";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
 const OrderDetails = () => {
   const { orderNumber } = useSelector((store: RootState) => store.makingOrder);

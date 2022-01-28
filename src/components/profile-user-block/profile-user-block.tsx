@@ -4,13 +4,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useDispatch, useSelector } from "../../redux/hooks";
 // LOCAL
 import styles from "./profile-user-block.module.css";
-import { patchUser } from "../../services/actions/auth";
-import { IS_DATA_USER_UPDATED } from "../../services/actions/auth";
+import { patchUser } from "../../redux/actions/auth";
+import { IS_DATA_USER_UPDATED } from "../../redux/actions/auth";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
 const UserBlock = () => {
   const dispatch = useDispatch();

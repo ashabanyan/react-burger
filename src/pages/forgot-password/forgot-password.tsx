@@ -4,13 +4,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "../../services/hooks";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./forgot-password.module.css";
-import { fetchForgotPasswort } from "../../services/actions/forgotPassword";
+import { fetchForgotPasswort } from "../../redux/actions/forgotPassword";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 
 const ForgotPasswordPage = () => {
   const history = useHistory();

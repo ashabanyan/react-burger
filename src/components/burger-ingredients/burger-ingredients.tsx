@@ -1,14 +1,14 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef } from "react";
 import { Scrollbar } from "react-scrollbars-custom";
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../redux/hooks";
 
 // ---------- LOCAL ----------
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { tab_items } from "../../constants/constants";
 // ---------- TYPES ----------
-import { RootState } from "../../services/types/index";
+import { RootState } from "../../redux/types/index";
 import { IIngredient } from "../../types/common";
 
 const BurgerIngredients = () => {
