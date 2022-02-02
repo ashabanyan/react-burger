@@ -10,7 +10,7 @@ export const socketMiddleware = (): Middleware => {
       let ws: WebSocket | null = null;
 
       const { type, url, connection } = action
-      const { wsInit, onOpen, onClose, onMessage } = wsActions
+      const { wsInit, onOpen, onClose, onMessage, onError } = wsActions
 
       if ( type === wsInit) {
         const token = localStorage.getItem('accessToken');
@@ -33,6 +33,10 @@ export const socketMiddleware = (): Middleware => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           dispatch({ type: onMessage, payload: parsedData})
+        }
+
+        ws.onerror = () => {
+          dispatch({ type: onError })
         }
       }
       next(action)

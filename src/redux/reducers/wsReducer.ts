@@ -1,4 +1,4 @@
-import { WS_CONNECTION_SUCCESS, WS_CONNECTION_CLOSED, WS_GET_MESSAGE } from '../actions/wsActions';
+import { WS_CONNECTION_SUCCESS, WS_CONNECTION_CLOSED, WS_GET_MESSAGE, WS_CONNECTION_ERROR } from '../actions/wsActions';
 import { TWsActionsUnionType } from '../actions/wsActions';
 import { IOrder } from '../../types/common';
 
@@ -32,6 +32,13 @@ export const wsReducer = (state = initialState, action: TWsActionsUnionType) => 
         ...state, 
         isConnected: false,
         isFailed: false,
+      }
+    }
+    case WS_CONNECTION_ERROR: {
+      return {
+        ...state, 
+        isConnected: false,
+        isFailed: true,
       }
     }
     case WS_GET_MESSAGE: {
