@@ -9,7 +9,7 @@ import {
 import { IIngredient } from '../../types/common';
 import { TIngredientsActions } from '../actions/ingredients';
 
-type TIngredientsState = {
+export type TIngredientsState = {
   ingRequest: boolean;
   ingError: boolean;
   allIngredients: Array<IIngredient> | null;

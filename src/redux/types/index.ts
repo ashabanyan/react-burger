@@ -1,12 +1,14 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
-import { store } from '../../index';
+import { initStore } from '../store';
 import { rootReducer } from '../reducers/index';
 import {TAuthActions} from '../actions/auth';
 import {TForgotPasswordActions} from '../actions/forgotPassword';
 import {TIngredientsActions} from '../actions/ingredients';
 import {TMakingOrderAction} from '../actions/makingOrder';
 import {TOrderConstructorActions} from '../actions/orderConstructor';
+
+const store = initStore();
 
 export type RootState = ReturnType<typeof rootReducer>;
 

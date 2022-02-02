@@ -12,6 +12,7 @@ export interface IIngredient {
   __v: number;
   _id: string;
   id?: string;
+  count?: number;
 }
 
 export interface IUserData {
@@ -30,7 +31,7 @@ export interface ISuccessRegistrationData {
 
 export type IRefreshTokenData = Omit<ISuccessRegistrationData, "user">
 
-export interface IOrder {
+export interface IOrder2 {
   name: string;
   order: {
     number: number
@@ -45,3 +46,12 @@ export interface IDragItem {
 
 export type TAnyFunction = (...args: any[]) => void;
 
+export interface IOrder {
+  ingredients: string[];
+  name: string;
+  _id: string;
+  status: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}

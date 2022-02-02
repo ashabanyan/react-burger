@@ -1,5 +1,5 @@
 import { GET_ORDER_NUMBER_URL } from "../../constants/constants";
-import { IIngredient, IOrder } from '../../types/common';
+import { IIngredient, IOrder2 } from '../../types/common';
 import { AppThunk, AppDispatch } from '../types/index';
 // --------------- Экшен для получение номера заказа с сервера ---------------
 export const GET_ORDER_NUMBER_REQUEST: 'GET_ORDER_NUMBER_REQUEST' = 'GET_ORDER_NUMBER_REQUEST';
@@ -17,7 +17,7 @@ export interface IGetOrderNumberFailedAction {
 
 export interface IGetOrderNumberSuccessAction {
   readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
-  readonly data: IOrder;
+  readonly data: IOrder2;
 }
 
 export interface IClearOrderNumberAction {
@@ -34,6 +34,7 @@ export const getOrderNumber: AppThunk = (currentBurgerIngredients: Array<IIngred
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
       }, 
       method: 'POST', 
       body: JSON.stringify({ "ingredients": currentBurgerIngredients && currentBurgerIngredients.map(item => item._id)})

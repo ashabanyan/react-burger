@@ -18,8 +18,9 @@ import { DELETE_INGREDIENT_MODAL_DATA } from "../../redux/actions/ingredients";
 import { getIngredients } from "../../redux/actions/ingredients";
 import { getUser } from "../../redux/actions/auth";
 import NotFoundPage from "../../pages/not-found/not-found";
+import OrderInformation from "../order-information/order-information";
 import { RootState } from "../../redux/types/index";
-
+import { Sockets } from "../../redux/actions/wsActions";
 interface LocationElement {
   hash: string;
   key: string;
@@ -92,12 +93,16 @@ const App: FC = () => {
             <ProfilePage type="history" />
           </ProtectedRoute>
 
-          <Route path="/feed">
+          <ProtectedRoute path="/profile/orders/:orderId" exact>
+            <OrderInformation type="single" wsType={Sockets.UserOrders} />
+          </ProtectedRoute>
+
+          <Route path="/feed" exact>
             <FeedPage />
           </Route>
 
-          <Route path="/feed/:id">
-            <FeedPage />
+          <Route path="/feed/:orderId" exact>
+            <OrderInformation type="single" wsType={Sockets.AllOrders} />
           </Route>
 
           <Route>
@@ -111,6 +116,28 @@ const App: FC = () => {
             children={
               <Modal onClick={handleModalClose}>
                 <IngredientsDetails />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && background.pathname.includes("feed") && (
+          <Route
+            path="/feed/:orderId"
+            children={
+              <Modal onClick={handleModalClose}>
+                <OrderInformation />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && background.pathname.includes("profile/orders") && (
+          <Route
+            path="/profile/orders/:orderId"
+            children={
+              <Modal onClick={handleModalClose}>
+                <OrderInformation />
               </Modal>
             }
           />

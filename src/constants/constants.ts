@@ -26,3 +26,8 @@ export const PROFILE_PAGE_TYPES = {
   ProfilePage: 'profile',
   HistoryPage: 'history',
 }
+
+export enum OrdersCounterTypes {
+  total = "Выполнено за все время: ",
+  totalToday = "Выполнено за сегодня: ",
+}

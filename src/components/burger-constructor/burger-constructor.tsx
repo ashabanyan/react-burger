@@ -4,7 +4,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Scrollbar } from "react-scrollbars-custom";
 import { useDispatch } from "../../redux/hooks";
 import { useDrop } from "react-dnd";
 // ---------- LOCAL ----------
@@ -15,6 +14,7 @@ import { randomKeyGenerate } from "../../utils/js-utils";
 import IngredientItemConstructor from "../ingredient-item-constructor/ingredient-item-constructor";
 import { DND_TYPES } from "../../constants/constants";
 import { useHistory } from "react-router-dom";
+import DND_IMAGE from "../../images/dnd.png";
 // ---------- REDUX ACTIONS ----------
 import { getOrderNumber } from "../../redux/actions/makingOrder";
 import {
@@ -29,7 +29,6 @@ import { CLEAR_ORDER_NUMBER } from "../../redux/actions/makingOrder";
 // ---------- TYPES ----------
 import { IIngredient, IDragItem } from "../../types/common";
 import { RootState } from "../../redux/types/index";
-
 import { useSelector } from "../../redux/hooks";
 
 const BurgetConstructor = () => {
@@ -118,14 +117,6 @@ const BurgetConstructor = () => {
     }
   };
 
-  const constuctorHeight: any = useMemo(
-    () =>
-      currentOrderIngredients && currentOrderIngredients.length > 2
-        ? 265
-        : currentOrderIngredients && 88 * currentOrderIngredients.length,
-    [currentOrderIngredients]
-  );
-
   return (
     <section
       ref={dropTarget}
@@ -147,24 +138,22 @@ const BurgetConstructor = () => {
       )}
 
       {currentOrderIngredients && (
-        <Scrollbar style={{ height: constuctorHeight }}>
-          <div className={styles.main_block}>
-            {currentOrderIngredients.map((item: IIngredient, index: number) => (
-              <IngredientItemConstructor
-                key={item.id}
-                item={item}
-                id={item.id ?? ""}
-                index={index}
-                deleteIngredient={deleteIngredient}
-                moveCard={moveCard}
-              />
-            ))}
-          </div>
-        </Scrollbar>
+        <div className={styles.ingredients_wrapper}>
+          {currentOrderIngredients.map((item: IIngredient, index: number) => (
+            <IngredientItemConstructor
+              key={item.id}
+              item={item}
+              id={item.id ?? ""}
+              index={index}
+              deleteIngredient={deleteIngredient}
+              moveCard={moveCard}
+            />
+          ))}
+        </div>
       )}
 
       {currentOrderBun && (
-        <div className="ml-10 mt-4">
+        <div className="ml-10 mt-3">
           <ConstructorElement
             type="bottom"
             key={currentOrderBun.id + "низ"}

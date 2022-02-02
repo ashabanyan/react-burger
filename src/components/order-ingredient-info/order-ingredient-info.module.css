@@ -1,12 +1,24 @@
-.content_container {
+.ingredient_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name_block {
+  margin-right: auto;
+  max-width: 414px;
+}
+
+.price_block {
   display: flex;
 }
 
 /* ---------- SCROLLBAR ---------- */
 
 .ingredients_wrapper {
-  height: 780px;
-  width: 65%;
+  min-height: 80px;
+  max-height: 320px;
+
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -23,7 +35,7 @@
 }
 
 .ingredients_wrapper::-webkit-scrollbar-thumb {
-  height: 20%;
+  height: 50%;
   background: #8585ad;
   border: 3px solid #8585ad;
 }

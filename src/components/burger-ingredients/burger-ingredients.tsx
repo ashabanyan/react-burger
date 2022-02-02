@@ -1,8 +1,6 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef } from "react";
-import { Scrollbar } from "react-scrollbars-custom";
 import { useSelector } from "../../redux/hooks";
-
 // ---------- LOCAL ----------
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
@@ -18,14 +16,28 @@ const BurgerIngredients = () => {
     (store: RootState): any => store.ingredients
   );
 
-  const changeTab = (value: string) => {
-    setCurrentTab(value);
-  };
-
   const tabsRef = useRef<HTMLDivElement>(null);
   const bunsRef = useRef<HTMLDivElement>(null);
   const sauceRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const changeTab = (value: string) => {
+    setCurrentTab(value);
+    switch (value) {
+      case tab_items[0]: {
+        if (bunsRef) bunsRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+      case tab_items[1]: {
+        if (sauceRef) sauceRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+      case tab_items[2]: {
+        if (mainRef) mainRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+    }
+  };
 
   const distanseCalc = (target: any) => {
     return (
@@ -74,7 +86,7 @@ const BurgerIngredients = () => {
         ))}
       </div>
 
-      <Scrollbar onScroll={handleScroll} style={{ height: 600 }}>
+      <div className={styles.ingredients_wrapper} onScroll={handleScroll}>
         <p
           className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}
           ref={bunsRef}
@@ -122,7 +134,7 @@ const BurgerIngredients = () => {
                 )
             )}
         </ul>
-      </Scrollbar>
+      </div>
     </section>
   );
 };

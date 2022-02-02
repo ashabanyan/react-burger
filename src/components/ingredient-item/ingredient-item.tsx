@@ -72,7 +72,7 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
             {ingredient.name}
           </p>
 
-          <Counter count={counter} size="default" />
+          {counter && <Counter count={counter} size="default" />}
         </li>
       )}
     </Link>

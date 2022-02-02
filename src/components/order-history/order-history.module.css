@@ -1,12 +1,11 @@
-.content_container {
-  display: flex;
+.orders_container {
+  width: 100%;
 }
 
 /* ---------- SCROLLBAR ---------- */
 
 .ingredients_wrapper {
-  height: 780px;
-  width: 65%;
+  height: 686px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -23,7 +22,7 @@
 }
 
 .ingredients_wrapper::-webkit-scrollbar-thumb {
-  height: 20%;
+  height: 50%;
   background: #8585ad;
   border: 3px solid #8585ad;
 }

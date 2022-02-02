@@ -62,13 +62,11 @@ const ProfilePage = ({ type }: IProfile) => {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <div>
-          {type === PROFILE_PAGE_TYPES.ProfilePage ? (
-            <UserBlock />
-          ) : (
-            <OrderHistory />
-          )}
-        </div>
+        {type === PROFILE_PAGE_TYPES.ProfilePage ? (
+          <UserBlock />
+        ) : (
+          <OrderHistory />
+        )}
       </div>
     </div>
   );

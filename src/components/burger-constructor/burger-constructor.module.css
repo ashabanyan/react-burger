@@ -19,3 +19,34 @@
 .section_border {
   border: 1px solid #4c4cff;
 }
+
+.section_border_before {
+  border: 1px dashed white;
+}
+/* ---------- SCROLLBAR ---------- */
+
+.ingredients_wrapper {
+  height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-height: 670px) {
+  .ingredients_wrapper {
+    max-height: 460px;
+  }
+}
+
+.ingredients_wrapper::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.ingredients_wrapper::-webkit-scrollbar-thumb {
+  height: 20%;
+  background: #8585ad;
+  border: 3px solid #8585ad;
+}
