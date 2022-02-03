@@ -19,7 +19,7 @@ const ProfilePage = ({ type }: IProfile) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   const logoutClicked = () => {
     dispatch(logout());

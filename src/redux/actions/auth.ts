@@ -1,5 +1,6 @@
 import { LOGIN_URL, REGISTRATION_URL, LOGOUT_URL, REFRESH_TOKEN_URL, GET_USER_URL, PATCH_USER_URL  } from '../../constants/constants';
 import { IUserData, ISuccessRegistrationData, IRefreshTokenData, IUserRegistrationData, TAnyFunction } from '../../types/common';
+import { checkResponse } from '../../utils/js-utils';
 import { AppThunk, AppDispatch } from '../types/index';
 // ----- Регистрация ----
 export const REGISTRATION_REQUEST: 'REGISTRATION REQUEST' = 'REGISTRATION REQUEST';
@@ -32,7 +33,7 @@ export const fetchRegistration: AppThunk = (email: string, password: string, nam
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => {
         if (result.success) {
           localStorage.setItem('refreshToken', result.refreshToken);
@@ -77,7 +78,7 @@ export const fetchAuthorization: AppThunk = (email: string, password: string) =>
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => {
         if (result.success) {
           localStorage.setItem('refreshToken', result.refreshToken);
@@ -120,9 +121,7 @@ export const refreshToken: AppThunk = (nextAction: TAnyFunction) => {
         token: localStorage.getItem('refreshToken')
       })
     })
-      .then(res => {
-        return res.json()
-      })
+      .then(checkResponse)
       .then(result => {
         if (result.success) {
           dispatch({ type: REFRESH_TOKEN_SUCCESS, data: result })
@@ -162,7 +161,7 @@ export const getUser: AppThunk
         "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
       }
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => {
         if (!result.success && result.message === "jwt expired") {
           refreshToken(getUser())
@@ -213,7 +212,7 @@ export const patchUser: AppThunk = (user: IUserData) => {
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => {
         if (!result.success && result.message === "jwt expired") {
           refreshToken(patchUser(user))
@@ -255,7 +254,7 @@ export const logout: AppThunk = () => {
       },
       body: JSON.stringify({ "token": localStorage.getItem('refreshToken') })
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => {
         if (result.success) {
           dispatch({ type: LOGOUT_SUCCESS })

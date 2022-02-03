@@ -36,7 +36,7 @@ interface LocationState {
 
 const App: FC = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(getIngredients());

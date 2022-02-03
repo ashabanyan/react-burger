@@ -7,7 +7,7 @@ import DONE_IMAGE from "../../images/done.png";
 import { RootState } from "../../redux/types/index";
 
 const OrderDetails = () => {
-  const { orderNumber } = useSelector((store: RootState) => store.makingOrder);
+  const { orderNumber } = useSelector((store) => store.makingOrder);
 
   return (
     <div className={`${styles.content_block} mt-30 mb-30 mr-25 ml-25`}>

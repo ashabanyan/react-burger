@@ -12,9 +12,7 @@ import { IIngredient } from "../../types/common";
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");
 
-  const { allIngredients } = useSelector(
-    (store: RootState): any => store.ingredients
-  );
+  const { allIngredients } = useSelector((store) => store.ingredients);
 
   const tabsRef = useRef<HTMLDivElement>(null);
   const bunsRef = useRef<HTMLDivElement>(null);
@@ -96,7 +94,7 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "bun" && (
                   <IngredientItem key={index} ingredient={item} />
                 )
@@ -112,7 +110,7 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "sauce" && (
                   <IngredientItem key={index} ingredient={item} />
                 )
@@ -128,7 +126,7 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "main" && (
                   <IngredientItem key={index} ingredient={item} />
                 )

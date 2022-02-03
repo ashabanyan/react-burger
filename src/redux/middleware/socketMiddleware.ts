@@ -5,7 +5,7 @@ import { wsActions, Sockets } from '../actions/wsActions';
 export const socketMiddleware = (): Middleware => {
   return ((store: MiddlewareAPI) => {
       
-    return (next) => (action: any) => {
+    return (next) => (action) => {
       const { dispatch } = store;
       let ws: WebSocket | null = null;
 

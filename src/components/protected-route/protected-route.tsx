@@ -2,8 +2,7 @@ import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "../../redux/hooks";
 import PropTypes from "prop-types";
 // ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 interface IProtectedRoute {
   children: React.ReactNode;
@@ -12,7 +11,7 @@ interface IProtectedRoute {
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   return (
     <Route

@@ -4,7 +4,7 @@ import { RootState } from "../../redux/types";
 import styles from "./order-ready-status.module.css";
 
 const OrderReadyStatus: React.FC = () => {
-  const { messages } = useSelector((store: RootState) => store.ws);
+  const { messages } = useSelector((store) => store.ws);
 
   const readyOrdersNumber = useMemo(
     () => messages && messages.filter((item) => item.status === "done"),

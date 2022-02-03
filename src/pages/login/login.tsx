@@ -36,7 +36,7 @@ const LoginPage = () => {
     dispatch(fetchAuthorization(email, password));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
   const { state } = useLocation<LocationState>();
 
   useEffect(() => {

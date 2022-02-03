@@ -14,7 +14,6 @@ import { randomKeyGenerate } from "../../utils/js-utils";
 import IngredientItemConstructor from "../ingredient-item-constructor/ingredient-item-constructor";
 import { DND_TYPES } from "../../constants/constants";
 import { useHistory } from "react-router-dom";
-import DND_IMAGE from "../../images/dnd.png";
 // ---------- REDUX ACTIONS ----------
 import { getOrderNumber } from "../../redux/actions/makingOrder";
 import {
@@ -38,11 +37,9 @@ const BurgetConstructor = () => {
     (store) => store.order
   );
 
-  const { allIngredients } = useSelector(
-    (store: RootState): any => store.ingredients
-  );
+  const { allIngredients } = useSelector((store) => store.ingredients);
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
   const [active, setActive] = useState(false);
 
   const [{ isOver }, dropTarget] = useDrop({
@@ -52,7 +49,7 @@ const BurgetConstructor = () => {
         type: ADD_INGREDIENT_INTO_ORDER,
         ingType: item.type,
         data: {
-          ...allIngredients.find((ing: IIngredient) => ing._id === item.id),
+          ...allIngredients!.find((ing: IIngredient) => ing._id === item.id),
           id: randomKeyGenerate(),
         },
       });
@@ -69,8 +66,8 @@ const BurgetConstructor = () => {
 
     const mainPrice = currentOrderIngredients
       ? currentOrderIngredients
-          .map((item: IIngredient) => item.price)
-          .reduce((sum: number, item: number) => sum + item)
+          .map((item) => item.price)
+          .reduce((sum, item) => sum + item)
       : 0;
 
     return bunPrice + mainPrice;
@@ -139,7 +136,7 @@ const BurgetConstructor = () => {
 
       {currentOrderIngredients && (
         <div className={styles.ingredients_wrapper}>
-          {currentOrderIngredients.map((item: IIngredient, index: number) => (
+          {currentOrderIngredients.map((item, index) => (
             <IngredientItemConstructor
               key={item.id}
               item={item}

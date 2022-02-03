@@ -15,9 +15,7 @@ import { RootState } from "../../redux/types/index";
 const ForgotPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { forgotPasswordStatus } = useSelector(
-    (store: RootState) => store.forgotPassword
-  );
+  const { forgotPasswordStatus } = useSelector((store) => store.forgotPassword);
   const [email, setEmail] = useState("");
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -35,7 +33,7 @@ const ForgotPasswordPage = () => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forgotPasswordStatus]);
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });

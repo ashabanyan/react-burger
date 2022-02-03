@@ -15,9 +15,7 @@ import { OrdersCounterTypes } from "../../constants/constants";
 
 const FeedPage = () => {
   const dispatch = useDispatch();
-  const { messages, total, totalToday } = useSelector(
-    (store: RootState) => store.ws
-  );
+  const { messages, total, totalToday } = useSelector((store) => store.ws);
 
   useEffect(() => {
     dispatch({

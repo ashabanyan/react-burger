@@ -14,9 +14,7 @@ import { RootState } from "../../redux/types/index";
 
 const UserBlock = () => {
   const dispatch = useDispatch();
-  const { user, isUserDataUpdated } = useSelector(
-    (store: RootState): any => store.auth
-  );
+  const { user, isUserDataUpdated } = useSelector((store) => store.auth);
 
   const [userData, setUserData] = useState({
     name: user ? user.name : "",
@@ -43,8 +41,8 @@ const UserBlock = () => {
   const onCancelClick = () => {
     setUserData({
       ...userData,
-      name: user.name ?? "",
-      email: user.email ?? "",
+      name: user!.name ?? "",
+      email: user!.email ?? "",
       password: "",
     });
   };
@@ -68,8 +66,8 @@ const UserBlock = () => {
 
   useEffect(() => {
     setIsBtnShown(
-      userData.name !== user.name ||
-        userData.email !== user.email ||
+      userData.name !== user!.name ||
+        userData.email !== user!.email ||
         userData.password
         ? true
         : false

@@ -1,5 +1,6 @@
 import { GET_INGREDIENTS_URL } from '../../constants/constants';
 import { IIngredient } from '../../types/common';
+import { checkResponse } from '../../utils/js-utils';
 import { AppThunk, AppDispatch } from '../types/index';
 
 // --------------- Получение ингридиентов от API ---------------
@@ -39,11 +40,7 @@ export const getIngredients: AppThunk = () => {
     })
 
     fetch(GET_INGREDIENTS_URL)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-      })
+      .then(checkResponse)
       .then(result => {
         dispatch({ 
           type: GET_INGREDIENTS_SUCCESS,

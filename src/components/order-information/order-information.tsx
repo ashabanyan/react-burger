@@ -27,7 +27,7 @@ const OrderInformation: React.FC<OrderInformationProps> = ({
   wsType,
 }) => {
   const dispatch = useDispatch();
-  const { messages } = useSelector((store: RootState) => store.ws);
+  const { messages } = useSelector((store) => store.ws);
   const { allIngredients } = useSelector((store) => store.ingredients);
 
   useEffect(() => {

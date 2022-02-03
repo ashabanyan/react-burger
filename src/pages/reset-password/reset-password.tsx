@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { resetPasswordStatus, recoveryStage } = useSelector(
-    (store: RootState) => store.forgotPassword
+    (store) => store.forgotPassword
   );
 
   const [newPassword, setNewPassword] = useState("");
@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
     dispatch(fetchResetPassword(newPassword, mailCode));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });

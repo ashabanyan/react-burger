@@ -1,4 +1,5 @@
 import { FORGOT_PASSWORD_URL, RESET_PASSWORD_URL } from '../../constants/constants';
+import { checkResponse } from '../../utils/js-utils';
 import { AppThunk, AppDispatch } from '../types/index';
 
 // FORGOT PASSWORD - Первичный запрос на сброс пароля
@@ -32,7 +33,7 @@ export const fetchForgotPasswort: AppThunk = (email: string) => {
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => dispatch({ type: FORGOT_PASSWORD_SUCCESS }) )
       .catch(err => dispatch({ type: FORGOT_PASSWORD_ERROR}))
   }
@@ -69,7 +70,7 @@ export const fetchResetPassword: AppThunk = (newPassword: string, code: string) 
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
+      .then(checkResponse)
       .then(result => dispatch({ type: RESET_PASSWORD_SUCCESS}))
       .catch(err => dispatch({ type: RESET_PASSWORD_ERROR}))
   }

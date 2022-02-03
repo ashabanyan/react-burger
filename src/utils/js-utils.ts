@@ -1,5 +1,12 @@
 import { IIngredient } from '../types/common';
 
+export const checkResponse = (res: any) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка ${res.status}`);
+}
+
 export const isObjectEmpty = (obj: IIngredient | {}) => {
   for (let key in obj) {
     return false;

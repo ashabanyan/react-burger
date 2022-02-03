@@ -34,7 +34,7 @@ const RegisterPage = () => {
     dispatch(fetchRegistration(email, password, name));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });

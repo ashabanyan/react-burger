@@ -26,7 +26,7 @@ const OrderIngredientInfo: React.FC<OrderIngredientInfoProps> = ({
 
   useEffect(() => {
     const arr = uniqueArray(ingredients);
-    const order = arr.map((id, index) => {
+    const order = arr.map((id) => {
       const countIng = ingredients.filter((item) => item === id).length;
       const ingredient = allIngredients!.find((item) => item._id === id);
       const currentIngredient = { ...ingredient, count: countIng };

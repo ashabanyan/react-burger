@@ -11,7 +11,7 @@ import { RootState } from "../../redux/types";
 
 const OrderHistory = () => {
   const dispatch = useDispatch();
-  const { messages } = useSelector((store: RootState) => store.ws);
+  const { messages } = useSelector((store) => store.ws);
 
   useEffect(() => {
     dispatch({

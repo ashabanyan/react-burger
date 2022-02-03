@@ -17,7 +17,7 @@ interface IMatchParams {
 
 const IngredientDetails = ({ type }: IIngredientDetails) => {
   const { allIngredients, currentViewIngredient } = useSelector(
-    (store: RootState): any => store.ingredients
+    (store) => store.ingredients
   );
   const match = useRouteMatch<IMatchParams>();
   const dispatch = useDispatch();

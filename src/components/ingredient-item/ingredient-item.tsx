@@ -28,7 +28,7 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
   });
 
   const { currentOrderBun, currentOrderIngredients } = useSelector(
-    (store: RootState): any => store.order
+    (store) => store.order
   );
 
   const counter = useMemo(() => {
@@ -37,8 +37,7 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
     } else
       return (
         currentOrderIngredients &&
-        currentOrderIngredients.filter((item: IIngredient) => item._id === id)
-          .length
+        currentOrderIngredients.filter((item) => item._id === id).length
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrderBun, currentOrderIngredients]);
