@@ -9,7 +9,6 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "../ingredient-item/ingredient-item.module.css";
 import { DND_TYPES } from "../../constants/constants";
 // ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
 import { IIngredient } from "../../types/common";
 
 interface IIngredientItem {

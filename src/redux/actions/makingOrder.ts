@@ -26,6 +26,7 @@ export interface IClearOrderNumberAction {
 
 export const getOrderNumber: AppThunk = (currentBurgerIngredients: Array<IIngredient>) => {
   return async function(dispatch: AppDispatch) {
+    
     dispatch({type: GET_ORDER_NUMBER_REQUEST});
 
     try {

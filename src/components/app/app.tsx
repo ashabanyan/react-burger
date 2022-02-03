@@ -19,7 +19,6 @@ import { getIngredients } from "../../redux/actions/ingredients";
 import { getUser } from "../../redux/actions/auth";
 import NotFoundPage from "../../pages/not-found/not-found";
 import OrderInformation from "../order-information/order-information";
-import { RootState } from "../../redux/types/index";
 import { Sockets } from "../../redux/actions/wsActions";
 interface LocationElement {
   hash: string;

@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "../../redux/hooks";
-import { RootState } from "../../redux/types";
 import { dateConverter, priceCounter } from "../../utils/js-utils";
 import OrderIngredientInfo from "../order-ingredient-info/order-ingredient-info";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";

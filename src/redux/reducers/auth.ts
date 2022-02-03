@@ -9,6 +9,7 @@ import { TAuthActions } from '../actions/auth';
 import { IUserRegistrationData } from '../../types/common';
 
 type TAuthState = {
+  isLoading: boolean;
   registrationRequest: boolean;
   registrationError: boolean;
   authRequest: boolean;
@@ -29,6 +30,7 @@ type TAuthState = {
 }
 
 const initialState: TAuthState = {
+  isLoading: true,
   registrationRequest: false,
   registrationError: false,
 
@@ -106,6 +108,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
         isAuth: true,
+        isLoading: false,
       }
     }
     // ----- Рефреш токена -----
@@ -151,7 +154,8 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         ...state, 
         getUserRequest: false,
         getUserError: false,
-        user: action.data
+        user: action.data,
+        isLoading: false,
       }
     }
     // ----- Редактирование данных о пользователе
@@ -207,6 +211,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         accessToken: null,
         refreshToken: null,
         isAuth: false,
+        isLoading: false,
       }
     }
     default: return state;

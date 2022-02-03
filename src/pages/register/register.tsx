@@ -11,8 +11,6 @@ import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./register.module.css";
 import { fetchRegistration } from "../../redux/actions/auth";
-// ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
 
 const RegisterPage = () => {
   const history = useHistory();

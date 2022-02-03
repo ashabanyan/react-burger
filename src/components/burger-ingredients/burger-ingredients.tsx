@@ -5,9 +5,6 @@ import { useSelector } from "../../redux/hooks";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { tab_items } from "../../constants/constants";
-// ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
-import { IIngredient } from "../../types/common";
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");

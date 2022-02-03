@@ -27,8 +27,8 @@ import {
 import { CLEAR_ORDER_NUMBER } from "../../redux/actions/makingOrder";
 // ---------- TYPES ----------
 import { IIngredient, IDragItem } from "../../types/common";
-import { RootState } from "../../redux/types/index";
 import { useSelector } from "../../redux/hooks";
+import Preloader from "../preloader/preloader";
 
 const BurgetConstructor = () => {
   const history = useHistory();
@@ -36,7 +36,7 @@ const BurgetConstructor = () => {
   const { currentOrderBun, currentOrderIngredients } = useSelector(
     (store) => store.order
   );
-
+  const { getOrderRequest } = useSelector((store) => store.makingOrder);
   const { allIngredients } = useSelector((store) => store.ingredients);
 
   const { user } = useSelector((store) => store.auth);
@@ -176,11 +176,14 @@ const BurgetConstructor = () => {
         </div>
       )}
 
-      {active && (
-        <Modal onClick={handleCloseModal}>
-          <OrderDetails />
-        </Modal>
-      )}
+      {active &&
+        (getOrderRequest ? (
+          <Preloader />
+        ) : (
+          <Modal onClick={handleCloseModal}>
+            <OrderDetails />
+          </Modal>
+        ))}
     </section>
   );
 };

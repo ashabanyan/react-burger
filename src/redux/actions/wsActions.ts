@@ -49,6 +49,8 @@ export const wsActions = {
   onMessage: WS_GET_MESSAGE
 };
 
+export type wsActionsType = typeof wsActions;
+
 export enum Sockets {
   AllOrders = 'all_orders',
   UserOrders = 'user_orders'

@@ -9,8 +9,6 @@ import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./forgot-password.module.css";
 import { fetchForgotPasswort } from "../../redux/actions/forgotPassword";
-// ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
 
 const ForgotPasswordPage = () => {
   const history = useHistory();

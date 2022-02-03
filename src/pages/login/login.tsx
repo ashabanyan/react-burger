@@ -10,8 +10,6 @@ import { useHistory, useLocation } from "react-router-dom";
 // LOCAL
 import styles from "./login.module.css";
 import { fetchAuthorization } from "../../redux/actions/auth";
-// ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
 
 type LocationState = {
   from: {
