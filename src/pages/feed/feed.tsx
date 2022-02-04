@@ -7,7 +7,6 @@ import {
   WS_CONNECTION_CLOSED,
   Sockets,
 } from "../../redux/actions/wsActions";
-import { RootState } from "../../redux/types";
 import styles from "./feed.module.css";
 import OrderReadyStatus from "../../components/order-ready-status/order-ready-status";
 import OrdersCounter from "../../components/orders-counter/orders-counter";

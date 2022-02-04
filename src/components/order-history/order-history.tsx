@@ -7,7 +7,6 @@ import {
   Sockets,
 } from "../../redux/actions/wsActions";
 import OrderPanel from "../order-panel/order-panel";
-import { RootState } from "../../redux/types";
 
 const OrderHistory = () => {
   const dispatch = useDispatch();

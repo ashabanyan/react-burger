@@ -8,8 +8,6 @@ import { PROFILE_PAGE_TYPES } from "../../constants/constants";
 import UserBlock from "../../components/profile-user-block/profile-user-block";
 import OrderHistory from "../../components/order-history/order-history";
 import { useEffect } from "react";
-// ---------- TYPES ----------
-import { RootState } from "../../redux/types/index";
 
 interface IProfile {
   type: string;

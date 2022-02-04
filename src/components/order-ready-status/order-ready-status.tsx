@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useSelector } from "../../redux/hooks";
-import { RootState } from "../../redux/types";
 import styles from "./order-ready-status.module.css";
 
 const OrderReadyStatus: React.FC = () => {
