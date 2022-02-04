@@ -1,7 +1,8 @@
 import { LOGIN_URL, REGISTRATION_URL, LOGOUT_URL, REFRESH_TOKEN_URL, GET_USER_URL, PATCH_USER_URL  } from '../../constants/constants';
 import { IUserData, ISuccessRegistrationData, IRefreshTokenData, IUserRegistrationData, TAnyFunction } from '../../types/common';
 import { checkResponse } from '../../utils/js-utils';
-import { AppThunk, AppDispatch } from '../types/index';
+// import { Dispatch } from '../types/index';
+import { Dispatch } from '../hooks';
 // ----- Регистрация ----
 export const REGISTRATION_REQUEST: 'REGISTRATION REQUEST' = 'REGISTRATION REQUEST';
 export const REGISTRATION_ERROR: 'REGISTRATION ERROR' = 'REGISTRATION ERROR';
@@ -20,8 +21,8 @@ export interface IRegistrationSuccessAction {
   readonly data: ISuccessRegistrationData
 }
 
-export const fetchRegistration: AppThunk = (email: string, password: string, name: string) => {
-  return function(dispatch: AppDispatch) {
+export const fetchRegistration = (email: string, password: string, name: string) => {
+  return function(dispatch: Dispatch) {
     dispatch({ type: REGISTRATION_REQUEST });
 
     const data = { "email": email, "password": password, "name": name }
@@ -64,8 +65,8 @@ export interface IAuthSuccessAction {
   readonly data: ISuccessRegistrationData
 }
 
-export const fetchAuthorization: AppThunk = (email: string, password: string) => {
-  return function(dispatch: AppDispatch) {
+export const fetchAuthorization = (email: string, password: string) => {
+  return function(dispatch: Dispatch) {
     
     dispatch({ type: AUTH_REQUEST });
 
@@ -108,8 +109,9 @@ export interface IRefreshTokenSuccessAction {
   readonly data: IRefreshTokenData
 }
 
-export const refreshToken: AppThunk = (nextAction: TAnyFunction) => {
-  return function(dispatch: AppDispatch) {
+export const refreshToken = (nextAction: TAnyFunction) => {
+  
+  return function(dispatch: Dispatch) {
     dispatch({ type: REFRESH_TOKEN_REQUEST });
 
     fetch(REFRESH_TOKEN_URL, {
@@ -124,11 +126,13 @@ export const refreshToken: AppThunk = (nextAction: TAnyFunction) => {
       .then(checkResponse)
       .then(result => {
         if (result.success) {
+          localStorage.setItem('refreshToken', result.refreshToken);
+          localStorage.setItem('accessToken', result.accessToken.split('Bearer ')[1]);
           dispatch({ type: REFRESH_TOKEN_SUCCESS, data: result })
-          nextAction()
+          dispatch(nextAction)
         }
       })
-      .catch(err => dispatch({ type: REFRESH_TOKEN_ERROR }))
+      .catch(err => err === 'Token is invalid' ? dispatch(logout()) : console.error(err))
   }
 }
 
@@ -151,9 +155,9 @@ export interface IGetUserSuccessAction {
   readonly data: IUserRegistrationData
 }
 
-export const getUser: AppThunk
+export const getUser
  = () => {
-  return function(dispatch: AppDispatch) {
+  return function(dispatch: Dispatch) {
     dispatch({ type: GET_USER_REQUEST });
 
     fetch(GET_USER_URL, {
@@ -162,18 +166,10 @@ export const getUser: AppThunk
       }
     })
       .then(checkResponse)
-      .then(result => {
-        if (!result.success && result.message === "jwt expired") {
-          refreshToken(getUser())
-        }
-        if (result.success) {
-          dispatch({ type: GET_USER_SUCCESS, data: result.user })
-        }
-      })
-      .catch(err => dispatch({ type: GET_USER_ERROR }))
+      .then(result => dispatch({ type: GET_USER_SUCCESS, data: result.user }))
+      .catch(err => err === 'jwt expired' ? dispatch(refreshToken(getUser())) : console.error(err))
   }
 }
-
 
 // ----- Редактирование информации о пользователе ----
 export const PATCH_USER_REQUEST: 'PATCH_USER_REQUEST' = 'PATCH_USER_REQUEST';
@@ -198,8 +194,8 @@ export interface IIsDataUserUpdatesAction {
   readonly type: typeof IS_DATA_USER_UPDATED
 }
 
-export const patchUser: AppThunk = (user: IUserData) => {
-  return function(dispatch: AppDispatch) {
+export const patchUser = (user: IUserData) => {
+  return function(dispatch: Dispatch) {
     dispatch({ type: PATCH_USER_REQUEST });
 
     const data = { "email": user.email, "password": user.password, "name": user.name }
@@ -243,8 +239,8 @@ export interface ILogoutSuccessAction {
   readonly type: typeof LOGOUT_SUCCESS
 }
 
-export const logout: AppThunk = () => {
-  return function(dispatch: AppDispatch) {
+export const logout = () => {
+  return function(dispatch: Dispatch) {
     dispatch({ type: LOGOUT_REQUEST });
 
     fetch(LOGOUT_URL, {
@@ -258,7 +254,6 @@ export const logout: AppThunk = () => {
       .then(result => {
         if (result.success) {
           dispatch({ type: LOGOUT_SUCCESS })
-          localStorage.removeItem('isAuth');
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
         }

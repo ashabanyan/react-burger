@@ -30,7 +30,7 @@ const OrderInformation: React.FC<OrderInformationProps> = ({
   const { allIngredients } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
-    if (type === "single") {
+    if (type === "single" && wsType) {
       dispatch({
         type: WS_CONNECTION_START,
         url:

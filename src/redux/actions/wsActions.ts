@@ -41,15 +41,13 @@ export type TWsActionsUnionType =
   | TWsGetMessage
   | TWsConnectionError
 
-export const wsActions = {
-  wsInit: WS_CONNECTION_START,
-  onOpen: WS_CONNECTION_SUCCESS,
-  onClose: WS_CONNECTION_CLOSED,
-  onError: WS_CONNECTION_ERROR,
-  onMessage: WS_GET_MESSAGE
+export type wsActionsType = {
+  wsInit: typeof WS_CONNECTION_START;
+  onOpen: typeof WS_CONNECTION_SUCCESS,
+  onClose: typeof WS_CONNECTION_CLOSED,
+  onError: typeof WS_CONNECTION_ERROR,
+  onMessage: typeof WS_GET_MESSAGE
 };
-
-export type wsActionsType = typeof wsActions;
 
 export enum Sockets {
   AllOrders = 'all_orders',

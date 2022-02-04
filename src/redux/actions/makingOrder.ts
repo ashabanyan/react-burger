@@ -1,6 +1,6 @@
 import { GET_ORDER_NUMBER_URL } from "../../constants/constants";
 import { IIngredient, IOrder2 } from '../../types/common';
-import { AppThunk, AppDispatch } from '../types/index';
+import { AppDispatch } from '../types/index';
 // --------------- Экшен для получение номера заказа с сервера ---------------
 export const GET_ORDER_NUMBER_REQUEST: 'GET_ORDER_NUMBER_REQUEST' = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_FAILED: 'GET_ORDER_NUMBER_FAILED'  = 'GET_ORDER_NUMBER_FAILED';
@@ -24,7 +24,7 @@ export interface IClearOrderNumberAction {
   readonly type: typeof CLEAR_ORDER_NUMBER;
 }
 
-export const getOrderNumber: AppThunk = (currentBurgerIngredients: Array<IIngredient>) => {
+export const getOrderNumber = (currentBurgerIngredients: Array<IIngredient>) => {
   return async function(dispatch: AppDispatch) {
     
     dispatch({type: GET_ORDER_NUMBER_REQUEST});

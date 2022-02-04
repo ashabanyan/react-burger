@@ -7,12 +7,14 @@ import {TForgotPasswordActions} from '../actions/forgotPassword';
 import {TIngredientsActions} from '../actions/ingredients';
 import {TMakingOrderAction} from '../actions/makingOrder';
 import {TOrderConstructorActions} from '../actions/orderConstructor';
+import {TWsActionsUnionType} from '../actions/wsActions'
+
 
 const store = initStore();
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-type TApplicationActions = TAuthActions | TForgotPasswordActions | TIngredientsActions | TMakingOrderAction | TOrderConstructorActions;
+export type TApplicationActions = TAuthActions | TForgotPasswordActions | TIngredientsActions | TMakingOrderAction | TOrderConstructorActions | TWsActionsUnionType;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions> 

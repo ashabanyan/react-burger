@@ -1,6 +1,6 @@
 import { FORGOT_PASSWORD_URL, RESET_PASSWORD_URL } from '../../constants/constants';
 import { checkResponse } from '../../utils/js-utils';
-import { AppThunk, AppDispatch } from '../types/index';
+import { AppDispatch } from '../types/index';
 
 // FORGOT PASSWORD - Первичный запрос на сброс пароля
 export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
@@ -19,7 +19,7 @@ export interface IForgotPasswordSuccessAction {
   readonly type: typeof FORGOT_PASSWORD_SUCCESS
 }
 
-export const fetchForgotPasswort: AppThunk = (email: string) => {
+export const fetchForgotPasswort = (email: string) => {
   return function(dispatch: AppDispatch) {
     
     dispatch({ type: FORGOT_PASSWORD_REQUEST});
@@ -57,7 +57,7 @@ export interface IResetPasswordSuccessAction {
   readonly type: typeof RESET_PASSWORD_SUCCESS
 }
 
-export const fetchResetPassword: AppThunk = (newPassword: string, code: string) => {
+export const fetchResetPassword = (newPassword: string, code: string) => {
   return function(dispatch: AppDispatch) {
     dispatch({ type: RESET_PASSWORD_REQUEST})
 
