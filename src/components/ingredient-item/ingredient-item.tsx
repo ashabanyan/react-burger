@@ -2,13 +2,13 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../redux/hooks";
+
 import { Link, useLocation } from "react-router-dom";
 // ---------- LOCAL ----------
 import styles from "../ingredient-item/ingredient-item.module.css";
 import { DND_TYPES } from "../../constants/constants";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
 import { IIngredient } from "../../types/common";
 
 interface IIngredientItem {
@@ -27,16 +27,17 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
   });
 
   const { currentOrderBun, currentOrderIngredients } = useSelector(
-    (store: RootState): any => store.order
+    (store) => store.order
   );
 
   const counter = useMemo(() => {
-    if (type === "bun" && id === currentOrderBun._id) {
+    if (type === "bun" && currentOrderBun && id === currentOrderBun._id) {
       return 1;
     } else
-      return currentOrderIngredients.filter(
-        (item: IIngredient) => item._id === id
-      ).length;
+      return (
+        currentOrderIngredients &&
+        currentOrderIngredients.filter((item) => item._id === id).length
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrderBun, currentOrderIngredients]);
 
@@ -69,7 +70,7 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
             {ingredient.name}
           </p>
 
-          <Counter count={counter} size="default" />
+          {counter && <Counter count={counter} size="default" />}
         </li>
       )}
     </Link>

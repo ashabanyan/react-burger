@@ -1,8 +1,8 @@
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../redux/hooks";
 import PropTypes from "prop-types";
+import Preloader from "../preloader/preloader";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
 import { FC } from "react";
 
 interface IProtectedRoute {
@@ -12,19 +12,27 @@ interface IProtectedRoute {
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user, isLoading } = useSelector((store) => store.auth);
 
   return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        user ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
-        )
-      }
-    />
+    <>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <Route
+          {...rest}
+          render={({ location }) =>
+            user ? (
+              children
+            ) : (
+              <Redirect
+                to={{ pathname: "/login", state: { from: location } }}
+              />
+            )
+          }
+        />
+      )}
+    </>
   );
 };
 

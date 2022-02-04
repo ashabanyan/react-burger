@@ -1,12 +1,17 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../redux/hooks";
+
 // ---------- LOCAL ----------
 import styles from "../order-details/order-details.module.css";
 import DONE_IMAGE from "../../images/done.png";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { useEffect } from "react";
 
 const OrderDetails = () => {
-  const { orderNumber } = useSelector((store: RootState) => store.makingOrder);
+  const { orderNumber, getOrderRequest } = useSelector(
+    (store) => store.makingOrder
+  );
+
+  useEffect(() => console.log(getOrderRequest), [getOrderRequest]);
 
   return (
     <div className={`${styles.content_block} mt-30 mb-30 mr-25 ml-25`}>

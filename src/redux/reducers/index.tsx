@@ -3,6 +3,7 @@ import { orderConstructorReducer } from "./orderConstructor";
 import { makingOrderReducer } from "./makingOrder";
 import { forgotPasswordReducer } from "./forgotPassword";
 import { authReducer } from "./auth";
+import { wsReducer } from "./wsReducer";
 
 import { combineReducers } from "redux";
 
@@ -12,6 +13,5 @@ export const rootReducer = combineReducers({
   makingOrder: makingOrderReducer,
   forgotPassword: forgotPasswordReducer,
   auth: authReducer,
+  ws: wsReducer,
 });
-
-export type RootState = ReturnType<typeof rootReducer>;

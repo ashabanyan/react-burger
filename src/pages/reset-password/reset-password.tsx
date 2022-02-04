@@ -4,19 +4,19 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./reset-password.module.css";
-import { fetchResetPassword } from "../../services/actions/forgotPassword";
+import { fetchResetPassword } from "../../redux/actions/forgotPassword";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../redux/types/index";
 
 const ResetPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { resetPasswordStatus, recoveryStage } = useSelector(
-    (store: RootState) => store.forgotPassword
+    (store) => store.forgotPassword
   );
 
   const [newPassword, setNewPassword] = useState("");
@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
     dispatch(fetchResetPassword(newPassword, mailCode));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });

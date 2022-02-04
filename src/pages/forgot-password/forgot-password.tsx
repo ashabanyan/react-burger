@@ -4,20 +4,16 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./forgot-password.module.css";
-import { fetchForgotPasswort } from "../../services/actions/forgotPassword";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { fetchForgotPasswort } from "../../redux/actions/forgotPassword";
 
 const ForgotPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { forgotPasswordStatus } = useSelector(
-    (store: RootState) => store.forgotPassword
-  );
+  const { forgotPasswordStatus } = useSelector((store) => store.forgotPassword);
   const [email, setEmail] = useState("");
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -35,7 +31,7 @@ const ForgotPasswordPage = () => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forgotPasswordStatus]);
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });

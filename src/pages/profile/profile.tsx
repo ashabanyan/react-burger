@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../services/actions/auth";
+import { useDispatch, useSelector } from "../../redux/hooks";
+import { logout } from "../../redux/actions/auth";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./profile.module.css";
@@ -9,7 +9,7 @@ import UserBlock from "../../components/profile-user-block/profile-user-block";
 import OrderHistory from "../../components/order-history/order-history";
 import { useEffect } from "react";
 // ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { RootState } from "../../redux/types/index";
 
 interface IProfile {
   type: string;
@@ -19,7 +19,7 @@ const ProfilePage = ({ type }: IProfile) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   const logoutClicked = () => {
     dispatch(logout());
@@ -62,13 +62,11 @@ const ProfilePage = ({ type }: IProfile) => {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <div>
-          {type === PROFILE_PAGE_TYPES.ProfilePage ? (
-            <UserBlock />
-          ) : (
-            <OrderHistory />
-          )}
-        </div>
+        {type === PROFILE_PAGE_TYPES.ProfilePage ? (
+          <UserBlock />
+        ) : (
+          <OrderHistory />
+        )}
       </div>
     </div>
   );

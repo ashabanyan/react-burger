@@ -5,13 +5,11 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory, useLocation } from "react-router-dom";
 // LOCAL
 import styles from "./login.module.css";
-import { fetchAuthorization } from "../../services/actions/auth";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { fetchAuthorization } from "../../redux/actions/auth";
 
 type LocationState = {
   from: {
@@ -36,7 +34,7 @@ const LoginPage = () => {
     dispatch(fetchAuthorization(email, password));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
   const { state } = useLocation<LocationState>();
 
   useEffect(() => {

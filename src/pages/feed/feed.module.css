@@ -1,0 +1,29 @@
+.content_container {
+  display: flex;
+}
+
+/* ---------- SCROLLBAR ---------- */
+
+.ingredients_wrapper {
+  height: 780px;
+  width: 65%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media (max-height: 670px) {
+  .ingredients_wrapper {
+    max-height: 460px;
+  }
+}
+
+.ingredients_wrapper::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.ingredients_wrapper::-webkit-scrollbar-thumb {
+  height: 20%;
+  background: #8585ad;
+  border: 3px solid #8585ad;
+}

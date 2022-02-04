@@ -1,31 +1,38 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef } from "react";
-import { Scrollbar } from "react-scrollbars-custom";
-import { useSelector } from "react-redux";
-
+import { useSelector } from "../../redux/hooks";
 // ---------- LOCAL ----------
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
 import { tab_items } from "../../constants/constants";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
-import { IIngredient } from "../../types/common";
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("Булки");
 
-  const { allIngredients } = useSelector(
-    (store: RootState): any => store.ingredients
-  );
-
-  const changeTab = (value: string) => {
-    setCurrentTab(value);
-  };
+  const { allIngredients } = useSelector((store) => store.ingredients);
 
   const tabsRef = useRef<HTMLDivElement>(null);
   const bunsRef = useRef<HTMLDivElement>(null);
   const sauceRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const changeTab = (value: string) => {
+    setCurrentTab(value);
+    switch (value) {
+      case tab_items[0]: {
+        if (bunsRef) bunsRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+      case tab_items[1]: {
+        if (sauceRef) sauceRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+      case tab_items[2]: {
+        if (mainRef) mainRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      }
+    }
+  };
 
   const distanseCalc = (target: any) => {
     return (
@@ -74,7 +81,7 @@ const BurgerIngredients = () => {
         ))}
       </div>
 
-      <Scrollbar onScroll={handleScroll} style={{ height: 600 }}>
+      <div className={styles.ingredients_wrapper} onScroll={handleScroll}>
         <p
           className={`${styles.ingredient_type} text text_type_main-small mt-10 mb-6`}
           ref={bunsRef}
@@ -84,7 +91,7 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "bun" && (
                   <IngredientItem key={index} ingredient={item} />
                 )
@@ -100,7 +107,7 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "sauce" && (
                   <IngredientItem key={index} ingredient={item} />
                 )
@@ -116,13 +123,13 @@ const BurgerIngredients = () => {
         <ul className={`${styles.ingredients_block} pl-4 pr-4`}>
           {allIngredients &&
             allIngredients.map(
-              (item: IIngredient, index: number) =>
+              (item, index) =>
                 item.type === "main" && (
                   <IngredientItem key={index} ingredient={item} />
                 )
             )}
         </ul>
-      </Scrollbar>
+      </div>
     </section>
   );
 };

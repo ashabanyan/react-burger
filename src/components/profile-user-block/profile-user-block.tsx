@@ -4,19 +4,15 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 // LOCAL
 import styles from "./profile-user-block.module.css";
-import { patchUser } from "../../services/actions/auth";
-import { IS_DATA_USER_UPDATED } from "../../services/actions/auth";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { patchUser } from "../../redux/actions/auth";
+import { IS_DATA_USER_UPDATED } from "../../redux/actions/auth";
 
 const UserBlock = () => {
   const dispatch = useDispatch();
-  const { user, isUserDataUpdated } = useSelector(
-    (store: RootState): any => store.auth
-  );
+  const { user, isUserDataUpdated } = useSelector((store) => store.auth);
 
   const [userData, setUserData] = useState({
     name: user ? user.name : "",
@@ -43,8 +39,8 @@ const UserBlock = () => {
   const onCancelClick = () => {
     setUserData({
       ...userData,
-      name: user.name ?? "",
-      email: user.email ?? "",
+      name: user!.name ?? "",
+      email: user!.email ?? "",
       password: "",
     });
   };
@@ -68,8 +64,8 @@ const UserBlock = () => {
 
   useEffect(() => {
     setIsBtnShown(
-      userData.name !== user.name ||
-        userData.email !== user.email ||
+      userData.name !== user!.name ||
+        userData.email !== user!.email ||
         userData.password
         ? true
         : false

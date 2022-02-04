@@ -1,12 +1,9 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useRouteMatch } from "react-router-dom";
-import { useDispatch } from "react-redux";
 // ---------- LOCAL ----------
 import styles from "../ingredient-details/ingredient-details.module.css";
-import { SET_INGREDIENT_MODAL_DATA } from "../../services/actions/ingredients";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { SET_INGREDIENT_MODAL_DATA } from "../../redux/actions/ingredients";
 
 interface IIngredientDetails {
   type?: string;
@@ -18,7 +15,7 @@ interface IMatchParams {
 
 const IngredientDetails = ({ type }: IIngredientDetails) => {
   const { allIngredients, currentViewIngredient } = useSelector(
-    (store: RootState): any => store.ingredients
+    (store) => store.ingredients
   );
   const match = useRouteMatch<IMatchParams>();
   const dispatch = useDispatch();

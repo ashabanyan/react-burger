@@ -6,13 +6,11 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 // LOCAL
 import styles from "./register.module.css";
-import { fetchRegistration } from "../../services/actions/auth";
-// ---------- TYPES ----------
-import { RootState } from "../../services/reducers/index";
+import { fetchRegistration } from "../../redux/actions/auth";
 
 const RegisterPage = () => {
   const history = useHistory();
@@ -34,7 +32,7 @@ const RegisterPage = () => {
     dispatch(fetchRegistration(email, password, name));
   };
 
-  const { user } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     user && history.replace({ pathname: "/" });
