@@ -34,7 +34,11 @@ const Modal: FC<IModal> = ({ children, onClick }) => {
     <>
       <ModalOverlay onClick={onClick} />
       <div className={`${styles.modal_content}`}>
-        <div className={styles.close_icon} onClick={onClick}>
+        <div
+          className={styles.close_icon}
+          onClick={onClick}
+          id="close_modal_btn"
+        >
           <CloseIcon type="primary" />
         </div>
         {children}

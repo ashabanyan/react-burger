@@ -35,6 +35,7 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
       return {
         ...state,
         forgotPasswordRequest: true,
+        forgotPasswordError: false,
       }
     case FORGOT_PASSWORD_ERROR:
       return {
@@ -47,6 +48,7 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
       return {
         ...state,
         forgotPasswordRequest: false,
+        forgotPasswordError: false,
         forgotPasswordStatus: true,
         recoveryStage: 1,
       }
@@ -54,19 +56,21 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
     case RESET_PASSWORD_REQUEST:
       return {
         ...state,
-        forgotPasswordRequest: true,
+        resetPasswordRequest: true,
+        resetPasswordError: false,
       }
     case RESET_PASSWORD_ERROR:
       return {
         ...state,
-        forgotPasswordRequest: false,
+        resetPasswordRequest: false,
         resetPasswordStatus: false,
         resetPasswordError: true,
       }
     case RESET_PASSWORD_SUCCESS:
       return {
         ...state,
-        forgotPasswordRequest: false,
+        resetPasswordRequest: false,
+        resetPasswordError: false,
         resetPasswordStatus: true,
       }
     default: return state;

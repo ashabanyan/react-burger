@@ -42,6 +42,11 @@ const BurgetConstructor = () => {
   const { user } = useSelector((store) => store.auth);
   const [active, setActive] = useState(false);
 
+  const isSendButtonShown = useMemo(
+    () => currentOrderBun && currentOrderIngredients,
+    [currentOrderBun, currentOrderIngredients]
+  );
+
   const [{ isOver }, dropTarget] = useDrop({
     accept: DND_TYPES.ingredient,
     drop(item: IDragItem) {
@@ -120,6 +125,7 @@ const BurgetConstructor = () => {
   return (
     <section
       ref={dropTarget}
+      id="drop_target"
       className={`${styles.section_container} ${
         isOver ? styles.section_border : ""
       } mt-25`}
@@ -173,9 +179,11 @@ const BurgetConstructor = () => {
             >{`${totalPrice}`}</p>
             <CurrencyIcon type="primary" />
           </div>
-          <Button onClick={handleOpenModal} type="primary" size="medium">
-            Оформить заказ
-          </Button>
+          {isSendButtonShown && (
+            <Button onClick={handleOpenModal} type="primary" size="medium">
+              Оформить заказ
+            </Button>
+          )}
         </div>
       )}
 

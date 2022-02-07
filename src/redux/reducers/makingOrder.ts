@@ -19,7 +19,6 @@ const initialState: TMakingOrderState = {
 }
 
 export const makingOrderReducer = (state = initialState, action: TMakingOrderAction): TMakingOrderState => {
-
   switch(action.type) {
     case GET_ORDER_NUMBER_REQUEST:
       return {
@@ -38,11 +37,14 @@ export const makingOrderReducer = (state = initialState, action: TMakingOrderAct
         ...state, 
         orderNumber: action.data.order.number,
         getOrderRequest: false,
+        getOrderFailed: false,
       }
     case CLEAR_ORDER_NUMBER: {
       return {
         ...state, 
         orderNumber: '',
+        getOrderRequest: false,
+        getOrderFailed: false,
       }
     }
     default: return state;

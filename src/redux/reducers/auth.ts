@@ -68,7 +68,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
       return {
         ...state,
         registrationRequest: false,
-        registrationError: false,
+        registrationError: true,
       }
     }
     case REGISTRATION_SUCCESS: {
@@ -112,6 +112,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
       return {
         ...state, 
         refreshTokenRequest: true,
+        refreshTokenError: false,
       }
     }
     case REFRESH_TOKEN_ERROR: {
@@ -122,7 +123,6 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
       }
     }
     case REFRESH_TOKEN_SUCCESS: {
-      console.log('дошло')
       return {
         ...state, 
         refreshTokenRequest: false,
