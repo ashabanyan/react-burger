@@ -48,6 +48,7 @@ const IngredientItem = ({ ingredient }: IIngredientItem) => {
       key={id}
       to={{ pathname: `/ingredients/${id}`, state: { background: location } }}
       className={styles.link}
+      id={type === "bun" ? "ingredient_bun" : "ingredient_item"}
     >
       {!isDrag && (
         <li ref={dragRef} className={`${styles.ingredient_item} mb-10`}>
