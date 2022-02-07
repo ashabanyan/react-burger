@@ -1,5 +1,3 @@
-Ссылка на выложенный проект - http://ashabanyan.students.nomoredomains.work/
-
 # Burger Constructor
 
 Приложение представляет из себя конструктор бургеров! Пользователь самостоятельно может собрать себе бургер...
@@ -12,26 +10,51 @@
 
 ...и отслеживать его в режиме реального времени! (внимание на блок "В Работе" и список заказов)
 
-<img src="./src/images/prders_feed" width="300">
+<img src="./src/images/orders_feed" width="300">
 
-## Demo
+## 🛠 Skills
 
-Insert gif or link to demo
+Javascript, HTML, CSS...
 
-## Other Common Github Profile Sections
+- ReactJS
+- Redux
+- Typescript
+- React DND
+- Jest
+- Cypress
 
-👩‍💻 I'm currently working on...
+## Run Locally
 
-🧠 I'm currently learning...
+Clone the project
 
-👯‍♀️ I'm looking to collaborate on...
+```bash
+  git clone https://github.com/ashabanyan/react-burger.git
+```
 
-🤔 I'm looking for help with...
+Go to the project directory
 
-💬 Ask me about...
+```bash
+  cd react-burger
+```
 
-📫 How to reach me...
+Install dependencies
 
-😄 Pronouns...
+```bash
+  npm install
+```
 
-⚡️ Fun fact...
+Start the server
+
+```bash
+  npm run start
+```
+
+Build and deploy
+
+```bash
+  npm deploy-script
+```
+
+## Deployed project
+
+[Stellar Burger](http://ashabanyan.students.nomoredomains.work/)
