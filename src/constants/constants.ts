@@ -31,5 +31,3 @@ export enum OrdersCounterTypes {
   total = "Выполнено за все время: ",
   totalToday = "Выполнено за сегодня: ",
 }
-
-const test = 'commit and push test';
