@@ -1,7 +1,7 @@
 import { GET_INGREDIENTS_URL } from '../../constants/constants';
 import { IIngredient } from '../../types/common';
 import { checkResponse } from '../../utils/js-utils';
-import { AppThunk, AppDispatch } from '../types/index';
+import { AppDispatch } from '../types/index';
 
 // --------------- Получение ингридиентов от API ---------------
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -26,14 +26,14 @@ export interface IGetIngredientsSuccessAction {
 
 export interface ISetIngredientModalDataAction {
   readonly type: typeof SET_INGREDIENT_MODAL_DATA;
-  readonly id: string;
+  readonly id?: string;
 }
 
 export interface IDeleteIngredientModalDataAction {
   readonly type: typeof DELETE_INGREDIENT_MODAL_DATA;
 }
 
-export const getIngredients: AppThunk = () => {
+export const getIngredients = () => {
   return function(dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,

@@ -4,7 +4,18 @@ export const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка ${res.status}`);
+
+  return res.json().then((result: any) => {
+    if (result.message) {
+      return Promise.reject(result.message);
+    } else {
+      return Promise.reject(res)
+    }
+  });
+
+
+
+
 }
 
 export const isObjectEmpty = (obj: IIngredient | {}) => {

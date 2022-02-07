@@ -23,7 +23,6 @@ type TAuthState = {
   isUserDataUpdated: boolean;
   logoutRequest: boolean;
   logoutError: boolean;
-  isAuth: boolean;
   user: IUserRegistrationData | null;
   accessToken: string | null;
   refreshToken: string | null;
@@ -50,7 +49,6 @@ const initialState: TAuthState = {
   logoutRequest: false,
   logoutError: false,
 
-  isAuth: false,
   user: null,
   accessToken: null,
   refreshToken: null,
@@ -81,7 +79,6 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         user: action.data.user,
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
-        isAuth: true,
       }
     }
     // ----- Авторизация -----
@@ -107,7 +104,6 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         user: action.data.user,
         accessToken: action.data.accessToken,
         refreshToken: action.data.refreshToken,
-        isAuth: true,
         isLoading: false,
       }
     }
@@ -126,6 +122,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
       }
     }
     case REFRESH_TOKEN_SUCCESS: {
+      console.log('дошло')
       return {
         ...state, 
         refreshTokenRequest: false,
@@ -210,7 +207,6 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
         user: null,
         accessToken: null,
         refreshToken: null,
-        isAuth: false,
         isLoading: false,
       }
     }

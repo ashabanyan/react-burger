@@ -26,7 +26,7 @@ import {
 } from "../../redux/actions/orderConstructor";
 import { CLEAR_ORDER_NUMBER } from "../../redux/actions/makingOrder";
 // ---------- TYPES ----------
-import { IIngredient, IDragItem } from "../../types/common";
+import { IDragItem } from "../../types/common";
 import { useSelector } from "../../redux/hooks";
 import Preloader from "../preloader/preloader";
 
@@ -45,14 +45,17 @@ const BurgetConstructor = () => {
   const [{ isOver }, dropTarget] = useDrop({
     accept: DND_TYPES.ingredient,
     drop(item: IDragItem) {
-      dispatch({
-        type: ADD_INGREDIENT_INTO_ORDER,
-        ingType: item.type,
-        data: {
-          ...allIngredients!.find((ing: IIngredient) => ing._id === item.id),
-          id: randomKeyGenerate(),
-        },
-      });
+      const ingObj = allIngredients!.find((ing) => ing._id === item.id);
+      if (ingObj) {
+        dispatch({
+          type: ADD_INGREDIENT_INTO_ORDER,
+          ingType: item.type,
+          data: {
+            ...ingObj,
+            id: randomKeyGenerate(),
+          },
+        });
+      }
     },
     collect(monitor) {
       return {
@@ -94,7 +97,7 @@ const BurgetConstructor = () => {
     setActive(false);
   };
 
-  const deleteIngredient = (id: number) =>
+  const deleteIngredient = (id: string) =>
     dispatch({
       type: DELETE_INGREDIENT_FROM_ORDER,
       ingId: id,

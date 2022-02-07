@@ -8,6 +8,7 @@ type TWsState = {
   isFailed: boolean;
   total: number | null;
   totalToday: number | null;
+  isFirstLoading: boolean;
 }
 
 const initialState: TWsState = {
@@ -16,6 +17,7 @@ const initialState: TWsState = {
   isFailed: false,
   total: null,
   totalToday: null,
+  isFirstLoading: false,
 }
 
 export const wsReducer = (state = initialState, action: TWsActionsUnionType) => {
@@ -47,6 +49,7 @@ export const wsReducer = (state = initialState, action: TWsActionsUnionType) => 
           messages: action.payload.orders,
           total: action.payload.total,
           totalToday: action.payload.totalToday,
+          isFirstLoading: !!state.messages
         }
 
     }
